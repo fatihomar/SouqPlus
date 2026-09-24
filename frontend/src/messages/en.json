@@ -479,7 +479,12 @@
   "notifications": {
     "title": "Notifications",
     "empty": "You have no notifications.",
-    "markAllRead": "Mark all as read"
+    "markAllRead": "Mark all as read",
+    "MESSAGE_RECEIVED": "You have a new message from {name}",
+    "OFFER_RECEIVED": "You received a new offer of ${amount} for \"{title}\" from {name}.",
+    "OFFER_ACCEPTED": "Congratulations! Your offer of ${amount} for \"{title}\" was accepted. Please contact the seller.",
+    "OFFER_REJECTED": "Unfortunately, the seller rejected your offer of ${amount} for \"{title}\".",
+    "OFFER_REJECTED_AUTO": "Sorry, the listing \"{title}\" was closed because the seller accepted another offer."
   },
   "explore": {
     "all": "All",

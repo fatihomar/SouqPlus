@@ -18,6 +18,7 @@ class NotificationsService {
         title: parsed.title || 'رسالة جديدة',
         body: parsed.body || notif.content,
         content: parsed.body || notif.content,
+        payload: parsed,
         actorId: parsed.actorId || null,
         entityId: parsed.entityId || null,
         readAt: notif.isRead ? notif.createdAt : null,

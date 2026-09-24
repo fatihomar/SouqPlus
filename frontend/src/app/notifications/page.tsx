@@ -102,7 +102,11 @@ export default function NotificationsPage() {
                   </div>
                   <div className="flex-1">
                     <p className={`text-sm md:text-base leading-relaxed ${!notif.isRead ? 'font-bold text-slate-900' : 'text-slate-600'}`}>
-                      {notif.content}
+                      {notif.payload && notif.payload.type ? t(notif.payload.type, { 
+                        amount: notif.payload.amount?.toLocaleString() || '', 
+                        title: notif.payload.listingTitle || '', 
+                        name: notif.payload.actorName || '' 
+                      }) : notif.content}
                     </p>
                     <span className="text-xs font-medium text-slate-400 mt-2 block">
                       {new Date(notif.createdAt).toLocaleDateString('ar')} - {new Date(notif.createdAt).toLocaleTimeString('ar', { hour: '2-digit', minute: '2-digit' })}

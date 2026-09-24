@@ -57,7 +57,13 @@ class OffersService {
       data: {
         userId: listing.sellerId,
         type: 'OFFER_RECEIVED',
-        content: `تلقيت عرضاً جديداً بقيمة ${amount}$ على إعلانك "${listing.title}" من ${offer.buyer.fullName}.`
+        content: JSON.stringify({
+          type: 'OFFER_RECEIVED',
+          amount,
+          listingTitle: listing.title,
+          actorName: offer.buyer.fullName,
+          body: `تلقيت عرضاً جديداً بقيمة ${amount}$ على إعلانك "${listing.title}" من ${offer.buyer.fullName}.`
+        })
       }
     });
 
@@ -169,7 +175,12 @@ class OffersService {
           data: {
             userId: offer.buyerId,
             type: 'INFO',
-            content: `عذراً، قام البائع برفض عرضك بقيمة ${offer.amount}$ لإعلان "${offer.listing.title}".`
+            content: JSON.stringify({
+              type: 'OFFER_REJECTED',
+              amount: offer.amount,
+              listingTitle: offer.listing.title,
+              body: `عذراً، قام البائع برفض عرضك بقيمة ${offer.amount}$ لإعلان "${offer.listing.title}".`
+            })
           }
         });
 
@@ -186,7 +197,12 @@ class OffersService {
         data: {
           userId: offer.buyerId,
           type: 'INFO',
-          content: `مبروك! تم قبول عرضك بقيمة ${offer.amount}$ لإعلان "${offer.listing.title}". يرجى التواصل مع البائع لإتمام الصفقة.`
+          content: JSON.stringify({
+            type: 'OFFER_ACCEPTED',
+            amount: offer.amount,
+            listingTitle: offer.listing.title,
+            body: `مبروك! تم قبول عرضك بقيمة ${offer.amount}$ لإعلان "${offer.listing.title}". يرجى التواصل مع البائع لإتمام الصفقة.`
+          })
         }
       });
 
@@ -233,7 +249,11 @@ class OffersService {
         const autoRejectNotifications = otherPendingOffers.map(otherOffer => ({
           userId: otherOffer.buyerId,
           type: 'INFO',
-          content: `نأسف، تم إغلاق الإعلان "${offer.listing.title}" نظراً لقبول البائع لعرض آخر. حظاً أوفر في المرة القادمة!`
+          content: JSON.stringify({
+            type: 'OFFER_REJECTED_AUTO',
+            listingTitle: offer.listing.title,
+            body: `نأسف، تم إغلاق الإعلان "${offer.listing.title}" نظراً لقبول البائع لعرض آخر. حظاً أوفر في المرة القادمة!`
+          })
         }));
 
         await tx.notification.createMany({

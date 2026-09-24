@@ -455,7 +455,12 @@
   "notifications": {
     "title": "الإشعارات",
     "empty": "ليس لديك أي إشعارات.",
-    "markAllRead": "تحديد الكل كمقروء"
+    "markAllRead": "تحديد الكل كمقروء",
+    "MESSAGE_RECEIVED": "لديك رسالة جديدة من {name}",
+    "OFFER_RECEIVED": "تلقيت عرضاً جديداً بقيمة ${amount} على إعلانك \"{title}\" من {name}.",
+    "OFFER_ACCEPTED": "مبروك! تم قبول عرضك بقيمة ${amount} لإعلان \"{title}\". يرجى التواصل مع البائع.",
+    "OFFER_REJECTED": "عذراً، قام البائع برفض عرضك بقيمة ${amount} لإعلان \"{title}\".",
+    "OFFER_REJECTED_AUTO": "نأسف، تم إغلاق الإعلان \"{title}\" نظراً لقبول البائع لعرض آخر."
   },
   "explore": {
     "all": "الكل",

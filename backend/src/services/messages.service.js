@@ -64,9 +64,11 @@ class MessagesService {
 
       if (!existingNotif) {
         const notifPayload = {
+          type: 'MESSAGE_RECEIVED',
           title: 'رسالة جديدة',
           body: `لديك رسالة جديدة من ${message.sender?.fullName || 'مستخدم'}`,
           actorId: senderId,
+          actorName: message.sender?.fullName || 'مستخدم',
           entityId: senderId
         };
 

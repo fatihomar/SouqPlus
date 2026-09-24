@@ -226,7 +226,11 @@ export default function Navbar({ onMenuClick, isSidebarOpen }: NavbarProps) {
                         </div>
                         <div>
                           <p className={`text-sm ${!notif.isRead ? 'font-bold text-slate-900' : 'text-slate-600'}`} dir="auto">
-                            {notif.content}
+                            {notif.payload && notif.payload.type ? t(notif.payload.type, { 
+                              amount: notif.payload.amount?.toLocaleString() || '', 
+                              title: notif.payload.listingTitle || '', 
+                              name: notif.payload.actorName || '' 
+                            }) : notif.content}
                           </p>
                           <span className="text-[10px] text-slate-400 mt-1 block" dir="ltr">
                             {new Date(notif.createdAt).toLocaleTimeString('ar', { hour: '2-digit', minute: '2-digit' })}
