@@ -626,9 +626,9 @@
   },
   "onboarding": {
     "aiFeatures": {
-      "conversationalSearch": "بحث حواري ذكي",
-      "marketInsights": "رؤى أسعار السوق",
-      "assistedNegotiations": "مساعدة في التفاوض"
+      "conversationalSearch": "بحث متقدم وسريع",
+      "marketInsights": "مقارنة الأسعار بسهولة",
+      "assistedNegotiations": "تواصل مباشر وسهل"
     },
     "steps": {
       "step1Title": "اكتشف كل ما تحتاجه",
@@ -636,7 +636,7 @@
       "step2Title": "اكتشف مميزات أذكى للسوق",
       "step2Desc": "اختبر الجيل القادم من البيع والشراء.",
       "step3Title": "سوق مبني على الثقة",
-      "step3Desc": "احصل على راحة البال التامة مع حسابات موثقة، معاملات آمنة، وموثوقية مدعومة بالذكاء الاصطناعي.",
+      "step3Desc": "تجربة تسوق آمنة وموثوقة تضمن لك أفضل العروض بكل سهولة.",
       "next": "التالي",
       "getStarted": "ابدأ الآن",
       "skip": "تخطي",

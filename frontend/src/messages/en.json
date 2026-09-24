@@ -651,9 +651,9 @@
   },
   "onboarding": {
     "aiFeatures": {
-      "conversationalSearch": "Conversational AI Search",
-      "marketInsights": "Market Price Insights",
-      "assistedNegotiations": "Assisted Negotiations"
+      "conversationalSearch": "Advanced and Fast Search",
+      "marketInsights": "Easy Price Comparison",
+      "assistedNegotiations": "Direct and Easy Communication"
     },
     "steps": {
       "step1Title": "Find Everything You Need",
@@ -661,7 +661,7 @@
       "step2Title": "Discover Smarter Marketplace Features",
       "step2Desc": "Experience the next generation of buying and selling.",
       "step3Title": "A Marketplace Built on Trust",
-      "step3Desc": "Experience total peace of mind with verified profiles, secure transactions, and AI-powered reliability.",
+      "step3Desc": "A secure and reliable shopping experience ensuring you the best deals with ease.",
       "next": "Next",
       "getStarted": "Get Started",
       "skip": "Skip",

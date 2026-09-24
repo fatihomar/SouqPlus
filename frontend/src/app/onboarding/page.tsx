@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Smartphone, Home, Car, Laptop, DoorOpen,
-  BrainCircuit, Search, BarChart3, Handshake, ShieldCheck
+  ShoppingBag, Search, BarChart3, Handshake, ShieldCheck
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -46,7 +46,7 @@ export default function Onboarding() {
       <div className="relative w-64 h-64 flex flex-col items-center justify-center pt-8">
         <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl"></div>
         <div className="relative z-10 w-24 h-24 bg-white border-2 border-primary rounded-2xl shadow-lg flex items-center justify-center">
-          <BrainCircuit className="w-12 h-12 text-primary" strokeWidth={1.5} />
+          <ShoppingBag className="w-12 h-12 text-primary" strokeWidth={1.5} />
         </div>
         <div className="w-full mt-6 space-y-2 z-20">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur p-2.5 rounded-xl shadow-sm border border-slate-100">
@@ -76,8 +76,8 @@ export default function Onboarding() {
         </div>
         <div className="absolute w-48 h-48 border border-primary/30 rounded-full border-dashed animate-[spin_10s_linear_infinite]" />
         <div className="absolute w-56 h-56 border border-slate-200 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
-        <span className="absolute top-10 end-8 text-xs font-bold text-primary">AI</span>
-        <span className="absolute bottom-12 start-6 text-xs font-bold text-slate-400">AI</span>
+        <span className="absolute top-10 end-8 text-xs font-bold text-primary">★</span>
+        <span className="absolute bottom-12 start-6 text-xs font-bold text-slate-400">★</span>
       </div>
     )
   }
