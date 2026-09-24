@@ -63,6 +63,7 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
     if (!offerAmount) return;
     try {
       setIsSubmitting(true);
+      await offersService.createOffer({ listingId: listing.id, amount: Number(offerAmount) });
       toast.success(t('offerSent'));
       setShowOfferModal(false);
       setOfferAmount('');
@@ -77,6 +78,7 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
     if (!messageText.trim()) return;
     try {
       setIsSubmitting(true);
+      await messagesService.sendMessage({ receiverId: listing.sellerId, content: messageText, listingId: listing.id });
       toast.success(t('messageSent'));
       setShowMessageModal(false);
       setMessageText('');
