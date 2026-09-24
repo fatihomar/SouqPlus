@@ -143,35 +143,7 @@ export default function CreateListingForm({ isEditMode = false, initialData, lis
     try {
       setIsSubmitting(true);
       
-      // AI Image Analysis - Blocking (Only run if new images are added, or run on first new image)
-      if (selectedImages.length > 0) {
-        toast.loading(t("aiImageLoading"), { id: 'submit' });
-        const reader = new FileReader();
-        const base64Promise = new Promise<string>((resolve) => {
-          reader.onload = () => resolve(reader.result as string);
-          reader.readAsDataURL(selectedImages[0]);
-        });
-        const imageBase64 = await base64Promise;
-        
-        try {
-          const analysisResult = await aiService.analyzeImage(imageBase64, formData.category, locale);
-          const data = analysisResult?.data;
-          
-          if (data) {
-             if (data.is_valid === false || data.decision === "reject") {
-                toast.error(data.user_message || data.reason || t("aiImageWarning"), { id: 'submit', duration: 7000 });
-                setIsSubmitting(false);
-                return; // BLOCK submission
-             } else if (data.decision === "review" || data.decision === "unavailable") {
-                toast(data.user_message || data.reason || "تنبيه بخصوص الصورة.", { id: 'ai-warn', icon: '⚠️', duration: 6000 });
-             }
-          }
-        } catch (aiError) {
-          console.error("AI Analysis failed:", aiError);
-          // In case of complete network failure to node backend
-          toast(t("aiImageWarning") || "تعذر فحص الصورة حالياً، سيتم المتابعة.", { id: 'ai-warn', icon: '⚠️', duration: 5000 });
-        }
-      }
+
 
       toast.loading(t("uploadingImages"), { id: 'submit' });
       

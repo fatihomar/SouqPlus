@@ -33,7 +33,7 @@ export function MediaUploadSection({
         <input
           type="file"
           multiple
-          accept="image/png, image/jpeg, image/webp"
+          accept="image/png, image/jpeg, image/webp, image/avif"
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
           onChange={handleImageChange}
         />

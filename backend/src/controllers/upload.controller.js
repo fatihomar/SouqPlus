@@ -52,7 +52,7 @@ class UploadController {
         });
 
         // 2. Validate format
-        const allowedFormats = ['jpeg', 'jpg', 'png', 'webp'];
+        const allowedFormats = ['jpeg', 'jpg', 'png', 'webp', 'avif'];
         if (!allowedFormats.includes(metadata.format)) {
           const err = new Error('صيغة الملف غير مدعومة');
           err.statusCode = 400;
