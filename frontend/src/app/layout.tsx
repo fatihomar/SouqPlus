@@ -15,8 +15,8 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "Souq+ | AI Smart Marketplace",
-  description: "Your AI-powered smart marketplace",
+  title: "Souq+ | Smart Marketplace",
+  description: "Your smart marketplace",
 };
 
 import { Toaster } from 'react-hot-toast';

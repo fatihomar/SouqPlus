@@ -21,11 +21,11 @@ app.use(morgan(':id :method :url :status :response-time ms - :res[content-length
 // نأخذ قائمة النطاقات المسموحة من المتغيرات البيئية أو نسمح بالمحلي فقط
 const allowedOrigins = process.env.FRONTEND_ORIGINS 
   ? process.env.FRONTEND_ORIGINS.split(',') 
-  : ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001'];
+  : ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001', 'https://plus-nine.vercel.app', 'https://souqplus-nine.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));

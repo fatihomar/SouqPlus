@@ -25,7 +25,7 @@ class AuthController {
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : isProduction,
-        sameSite: process.env.COOKIE_SAME_SITE || 'strict',
+        sameSite: process.env.COOKIE_SAME_SITE || (isProduction ? 'none' : 'lax'),
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       });
 
@@ -63,7 +63,7 @@ class AuthController {
       res.clearCookie('token', {
         httpOnly: true,
         secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : process.env.NODE_ENV === 'production',
-        sameSite: process.env.COOKIE_SAME_SITE || 'strict',
+        sameSite: process.env.COOKIE_SAME_SITE || (process.env.NODE_ENV === 'production' ? 'none' : 'lax'),
       });
 
       res.status(200).json({
