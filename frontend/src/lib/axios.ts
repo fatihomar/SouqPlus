@@ -3,7 +3,7 @@ import axios from 'axios';
 let csrfToken: string | null = null;
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
+  baseURL: typeof window !== 'undefined' ? '/api' : (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'),
   headers: {
     'Content-Type': 'application/json',
   },
