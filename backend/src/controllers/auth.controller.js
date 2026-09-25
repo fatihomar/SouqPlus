@@ -127,7 +127,7 @@ class AuthController {
     try {
       const { code } = req.query;
       const isProduction = process.env.NODE_ENV === 'production';
-      const frontendUrl = isProduction ? 'https://plus-nine.vercel.app' : 'http://localhost:3000';
+      const frontendUrl = isProduction ? process.env.FRONTEND_URL : 'http://localhost:3000';
 
       if (!code) {
         return res.redirect(`${frontendUrl}/login?error=Google authentication cancelled`);
@@ -161,7 +161,7 @@ class AuthController {
       res.redirect(`${frontendUrl}/home`);
     } catch (error) {
       console.error(error);
-      const frontendUrl = process.env.NODE_ENV === 'production' ? 'https://plus-nine.vercel.app' : 'http://localhost:3000';
+      const frontendUrl = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:3000';
       res.redirect(`${frontendUrl}/login?error=Google login failed`);
     }
   }
