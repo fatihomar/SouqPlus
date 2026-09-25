@@ -176,7 +176,7 @@ export default function MessagesPage() {
         </div>
 
         {/* Main Chat Area */}
-        <div className={`w-full md:w-2/3 flex-col bg-white ${activeUser ? 'flex' : 'hidden md:flex'}`}>
+        <div className={`w-full md:w-2/3 flex-col bg-white ${activeUser ? 'fixed inset-0 z-[100] h-[100dvh] flex md:relative md:inset-auto md:z-auto md:h-auto' : 'hidden md:flex'}`}>
           {activeUser ? (
             <>
               {/* Chat Header */}
