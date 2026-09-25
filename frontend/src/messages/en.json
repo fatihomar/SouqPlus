@@ -92,6 +92,8 @@
     "registerButton": "Create Account",
     "alreadyHaveAccount": "Already have an account? ",
     "loginInstead": "Login",
+    "orContinueWith": "Or continue with",
+    "continueWithGoogle": "Continue with Google",
     "errorAgreeTerms": "Please agree to the Terms & Conditions",
     "errorPasswordLength": "Password must be at least 6 characters long",
     "registerSuccess": "Account created successfully! Please login.",

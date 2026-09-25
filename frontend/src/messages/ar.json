@@ -91,6 +91,8 @@
     "registerButton": "إنشاء حساب",
     "alreadyHaveAccount": "لديك حساب بالفعل؟ ",
     "loginInstead": "تسجيل الدخول",
+    "orContinueWith": "أو المتابعة باستخدام",
+    "continueWithGoogle": "المتابعة باستخدام Google",
     "errorAgreeTerms": "يرجى الموافقة على الشروط والأحكام",
     "errorPasswordLength": "كلمة المرور يجب أن تتكون من 6 أحرف على الأقل",
     "registerSuccess": "تم إنشاء الحساب بنجاح! يرجى تسجيل الدخول.",
