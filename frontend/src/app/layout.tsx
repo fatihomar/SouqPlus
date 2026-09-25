@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export default async function RootLayout({
   children,
@@ -42,8 +43,10 @@ export default async function RootLayout({
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'} className={`${inter.variable} ${cairo.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-slate-50 text-slate-900">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-          <Toaster position="top-center" reverseOrder={false} />
+          <AuthProvider>
+            {children}
+            <Toaster position="top-center" reverseOrder={false} />
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

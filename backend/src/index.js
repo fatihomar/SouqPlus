@@ -70,11 +70,17 @@ app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(cookieParser());
 
 // 5. CSRF Protection
+// Trust the proxy (Render load balancer) so 'secure' cookies can be set over HTTPS.
+app.set('trust proxy', 1);
+
+const isProduction = process.env.NODE_ENV === 'production';
+
 const csrfProtection = csurf({ 
   cookie: {
     httpOnly: true,
-    secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : process.env.NODE_ENV === 'production',
-    sameSite: process.env.COOKIE_SAME_SITE || (process.env.NODE_ENV === 'production' ? 'none' : 'lax')
+    secure: true, // Always true for cross-origin between Vercel and Render
+    sameSite: 'none', // Always 'none' for cross-origin
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days (prevents EBADCSRFTOKEN after browser restart if session clears)
   } 
 });
 
