@@ -64,6 +64,13 @@ class AuthService {
     }
 
     // 2. مطابقة كلمة المرور المشفرة
+    if (!user.passwordHash) {
+      const error = new Error('INVALID_CREDENTIALS');
+      error.statusCode = 401;
+      error.code = 'INVALID_CREDENTIALS';
+      throw error;
+    }
+
     const isPasswordValid = await bcrypt.compare(data.password, user.passwordHash);
     if (!isPasswordValid) {
       const error = new Error('INVALID_CREDENTIALS');
@@ -76,6 +83,56 @@ class AuthService {
     const payload = { id: user.id, email: user.email, role: user.role, tokenVersion: user.tokenVersion };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '7d', // صالح لمدة 7 أيام
+    });
+
+    const { passwordHash: _, ...userWithoutPassword } = user;
+    return { user: userWithoutPassword, token };
+  }
+
+  async googleLogin(profile) {
+    const { email, sub: googleId, name: fullName, picture: avatarUrl } = profile;
+
+    let user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (user) {
+      if (user.isBanned) {
+        const error = new Error('USER_BANNED');
+        error.statusCode = 403;
+        error.code = 'USER_BANNED';
+        throw error;
+      }
+      
+      // Update googleId and avatar if not set
+      if (!user.googleId || !user.avatarUrl) {
+        user = await prisma.user.update({
+          where: { id: user.id },
+          data: { 
+            googleId: user.googleId || googleId,
+            avatarUrl: user.avatarUrl || avatarUrl,
+            isVerified: true
+          }
+        });
+      }
+    } else {
+      // Create new user as BUYER
+      user = await prisma.user.create({
+        data: {
+          email,
+          googleId,
+          fullName,
+          avatarUrl,
+          role: 'BUYER',
+          isVerified: true,
+          // passwordHash is left null for Google users
+        },
+      });
+    }
+
+    const payload = { id: user.id, email: user.email, role: user.role, tokenVersion: user.tokenVersion };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '7d', // 7 days
     });
 
     const { passwordHash: _, ...userWithoutPassword } = user;

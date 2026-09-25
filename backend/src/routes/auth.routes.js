@@ -13,6 +13,10 @@ router.post('/register', registerLimiter, validate(registerSchema), authControll
 // مسار تسجيل الدخول
 router.post('/login', loginLimiter, validate(loginSchema), authController.login);
 
+// مسارات Google OAuth
+router.get('/google', authController.googleAuth);
+router.get('/google/callback', authController.googleCallback);
+
 // مسار تسجيل الخروج
 router.post('/logout', authGuard, authController.logout);
 
