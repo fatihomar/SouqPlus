@@ -180,29 +180,29 @@ export default function HomePage() {
               </Link>
             </div>
 
-            {/* Images Container (Top half on Mobile, Full background on Desktop) */}
-            <div className="relative h-[280px] md:h-auto md:absolute md:inset-0 w-full overflow-hidden flex z-0 pointer-events-none">
-              {/* Left side (Real Estate) */}
-              <div className="w-full h-full md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[28%] lg:w-[30%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] relative z-0">
+            {/* Images Container (Stacked vertically on Mobile, Full background on Desktop) */}
+            <div className="relative h-[280px] sm:h-[320px] md:h-auto md:absolute md:inset-0 w-full overflow-hidden flex flex-col md:block z-0 pointer-events-none">
+              
+              {/* Real Estate Image (Top on Mobile, Left on Desktop) */}
+              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[28%] lg:w-[30%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] z-0">
                 <img 
                   src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000&auto=format&fit=crop" 
                   alt="Luxury Villa" 
-                  className="w-full h-full object-cover object-right pointer-events-auto"
+                  className="w-full h-full object-cover object-center md:object-right pointer-events-auto"
                 />
-                {/* Mobile Gradient: Fade to white at bottom */}
-                <div className="md:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
               </div>
 
-              {/* Right side (Cars) with diagonal split */}
-              <div className="absolute top-0 end-0 bottom-0 w-[55%] md:w-[30%] lg:w-[32%] z-10 ltr:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] rtl:[clip-path:polygon(0_0,85%_0,100%_100%,0_100%)] md:ltr:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] md:rtl:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] pointer-events-auto">
+              {/* Cars Image (Bottom on Mobile, Right on Desktop) */}
+              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:end-0 md:bottom-0 md:w-[30%] lg:w-[32%] z-10 md:ltr:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] md:rtl:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] pointer-events-auto">
                 <img 
                   src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2000&auto=format&fit=crop" 
                   alt="Luxury Car" 
-                  className="w-full h-full object-cover object-left"
+                  className="w-full h-full object-cover object-center md:object-left"
                 />
-                {/* Mobile Gradient: Fade to white at bottom */}
-                <div className="md:hidden absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
               </div>
+
+              {/* Mobile Gradient: Fade to white at bottom (covers the bottom image smoothly) */}
+              <div className="md:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white via-white/95 to-transparent pointer-events-none z-20" />
             </div>
 
             {/* Content Container */}
