@@ -168,7 +168,7 @@ export default function HomePage() {
         
         {/* 1. Hero Section */}
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 w-full mt-4 sm:mt-6">
-          <div className="relative w-full rounded-[32px] overflow-hidden bg-white border border-slate-200 min-h-[500px] md:min-h-[460px] flex flex-col md:block shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
+          <div className="relative w-full rounded-[32px] overflow-hidden bg-white border border-slate-200 min-h-[500px] md:min-h-[460px] flex flex-col md:flex-row shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
             
             {/* Top Right Pills */}
             <div className="absolute top-4 end-4 md:top-8 md:end-8 flex items-center gap-2 md:gap-3 z-30">
