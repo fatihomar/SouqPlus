@@ -104,22 +104,13 @@ export default function Onboarding() {
         <div className="text-xl font-bold tracking-tight text-slate-900">
           Souq<span className="text-primary">+</span>
         </div>
-        {step < onboardingSteps.length - 1 ? (
-          <button 
-            onClick={() => router.push("/home")}
-            className="text-sm font-bold text-slate-500 hover:text-slate-900 px-4 py-2 transition-colors"
-          >
-            {t("skip")}
-          </button>
-        ) : (
-          <div className="w-10 h-10"></div>
-        )}
+        <div className="w-10 h-10"></div> {/* Spacer to center the logo */}
       </div>
 
-      <div className="w-full max-w-5xl flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center pb-10">
+      <div className="w-full max-w-5xl flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 items-center pb-6 md:pb-10">
         
         {/* Left Side: Mobile Mockup / Illustration Area */}
-        <div className="flex flex-col items-center justify-center order-1 md:order-1 h-[350px] md:h-[500px]">
+        <div className="flex flex-col items-center justify-center order-1 md:order-1 h-[260px] md:h-[500px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={step}
@@ -156,7 +147,7 @@ export default function Onboarding() {
           </div>
 
           {/* Dots Indicator */}
-          <div className="flex items-center justify-center md:justify-start gap-2 mb-10">
+          <div className="flex items-center justify-center md:justify-start gap-2 mb-6 md:mb-10">
             {onboardingSteps.map((_, i) => (
               <div
                 key={i}
@@ -168,13 +159,22 @@ export default function Onboarding() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-sm mx-auto md:mx-0">
+          <div className="flex flex-col items-center gap-3 w-full max-w-sm mx-auto md:mx-0">
             <Button 
               onClick={nextStep} 
               className="w-full font-semibold rounded-xl h-12 text-base"
             >
               {step === onboardingSteps.length - 1 ? t("getStarted") : t("next")}
             </Button>
+            {step < onboardingSteps.length - 1 && (
+              <Button 
+                variant="ghost" 
+                onClick={() => router.push("/home")}
+                className="w-full text-slate-500 hover:text-slate-900 font-bold h-10"
+              >
+                {t("skip")}
+              </Button>
+            )}
           </div>
           
           {step === onboardingSteps.length - 1 && (
