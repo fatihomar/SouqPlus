@@ -268,3 +268,26 @@ model AiUsageLog {
   @@index([userId])
   @@index([createdAt])
 }
+
+model ExternalListing {
+  id           String   @id @default(uuid())
+  externalId   String
+  source       String   // e.g., 'CARAPIS', 'REAL_ESTATE_PROVIDER'
+  category     String   // e.g., 'CAR', 'REAL_ESTATE'
+  title        String
+  description  String?
+  price        Float?
+  currency     String   @default("USD")
+  location     Json?    // e.g., { city: 'Istanbul', district: 'Fatih' }
+  images       String[]
+  externalUrl  String
+  rawData      Json?
+  isActive     Boolean  @default(true)
+  lastSyncedAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([source, externalId])
+  @@index([category, isActive])
+  @@index([source])
+}

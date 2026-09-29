@@ -5,9 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { getListings } from "@/services/listing.service";
+import { getExternalListings } from "@/services/external-listings.service";
 import ListingCard from "@/components/listings/ListingCard";
+import ExternalListingCard from "@/components/listings/ExternalListingCard";
 import FiltersSidebar from "@/components/explore/FiltersSidebar";
-import { SlidersHorizontal, Search, Home as HomeIcon, ChevronLeft, ArrowUpDown } from "lucide-react";
+import { SlidersHorizontal, Search, Home as HomeIcon, ChevronLeft, Globe } from "lucide-react";
 import Link from "next/link";
 
 export default function ExplorePage() {
@@ -18,6 +20,7 @@ export default function ExplorePage() {
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isExternal, setIsExternal] = useState(false);
 
   // استخراج الفلاتر الحالية من الرابط
   const currentFilters: Record<string, string> = {};
@@ -31,9 +34,20 @@ export default function ExplorePage() {
     const fetchListings = async () => {
       try {
         setLoading(true);
-        const res = await getListings(currentFilters);
-        if (res.success) {
-          setListings(res.data);
+        if (isExternal) {
+          const res = await getExternalListings(currentFilters);
+          if (res.success) {
+            setListings(res.data);
+          } else {
+            setListings([]);
+          }
+        } else {
+          const res = await getListings(currentFilters);
+          if (res.success) {
+            setListings(res.data);
+          } else {
+            setListings([]);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch listings", error);
@@ -42,7 +56,7 @@ export default function ExplorePage() {
       }
     };
     fetchListings();
-  }, [searchParams]);
+  }, [searchParams, isExternal]);
 
   // تحديث الرابط عند تغيير أي فلتر
   const handleFilterChange = (newFilters: Record<string, string>) => {
@@ -107,13 +121,49 @@ export default function ExplorePage() {
         {/* Header Section (Desktop & Mobile) */}
         <div className="px-4 sm:px-0 mb-6">
           {/* Breadcrumbs */}
-          <div className="hidden sm:flex items-center gap-2 text-sm text-slate-500 font-medium mb-4">
-            <Link href="/home" className="hover:text-primary-dark transition-colors flex items-center gap-1">
-              <HomeIcon className="w-4 h-4" />
-              {t("home")}
-            </Link>
-            <ChevronLeft className="w-4 h-4 text-slate-300" />
-            <span className="text-slate-800 font-bold">{categoryName}</span>
+          <div className="hidden sm:flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
+              <Link href="/home" className="hover:text-primary-dark transition-colors flex items-center gap-1">
+                <HomeIcon className="w-4 h-4" />
+                {t("home")}
+              </Link>
+              <ChevronLeft className="w-4 h-4 text-slate-300" />
+              <span className="text-slate-800 font-bold">{categoryName}</span>
+            </div>
+            
+            {/* Toggle Switch */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-full shadow-inner border border-slate-200/60">
+              <button
+                onClick={() => setIsExternal(false)}
+                className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all duration-300 ${!isExternal ? 'bg-white text-primary shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                {t("souqListings") || "Souq+ Listings"}
+              </button>
+              <button
+                onClick={() => setIsExternal(true)}
+                className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-1.5 ${isExternal ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                {t("externalListings") || "External Listings"}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Toggle Switch */}
+          <div className="sm:hidden flex items-center bg-slate-100 p-1 rounded-full shadow-inner border border-slate-200/60 mb-4">
+            <button
+              onClick={() => setIsExternal(false)}
+              className={`flex-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${!isExternal ? 'bg-white text-primary shadow-sm' : 'text-slate-500'}`}
+            >
+              Souq+
+            </button>
+            <button
+              onClick={() => setIsExternal(true)}
+              className={`flex-1 px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 flex items-center justify-center gap-1 ${isExternal ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500'}`}
+            >
+              <Globe className="w-3 h-3" />
+              External
+            </button>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black text-slate-900 mb-2">{categoryName}</h1>
@@ -191,7 +241,9 @@ export default function ExplorePage() {
             ) : listings.length > 0 ? (
               <div className={`grid ${listings.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6`}>
                 {listings.map((listing) => (
-                  <ListingCard key={listing.id} listing={listing} />
+                  isExternal 
+                    ? <ExternalListingCard key={listing.id} listing={listing} />
+                    : <ListingCard key={listing.id} listing={listing} />
                 ))}
               </div>
             ) : (
