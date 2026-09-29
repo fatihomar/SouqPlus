@@ -67,7 +67,7 @@
     "loginTitle": "Welcome Back",
     "loginSubtitle": "Login to your account",
     "emailLabel": "Email Address",
-    "emailPlaceholder": "name@example.com",
+    "emailPlaceholder": "",
     "passwordLabel": "Password",
     "passwordPlaceholder": "••••••••",
     "loginButton": "Sign In",

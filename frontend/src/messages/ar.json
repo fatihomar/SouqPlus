@@ -66,7 +66,7 @@
     "loginTitle": "مرحباً بعودتك",
     "loginSubtitle": "قم بتسجيل الدخول لحسابك",
     "emailLabel": "البريد الإلكتروني",
-    "emailPlaceholder": "name@example.com",
+    "emailPlaceholder": "",
     "passwordLabel": "كلمة المرور",
     "passwordPlaceholder": "••••••••",
     "loginButton": "تسجيل الدخول",
