@@ -16,6 +16,7 @@ interface NavbarProps {
 export default function Navbar({ onMenuClick, isSidebarOpen }: NavbarProps) {
   const { user, logout, isAuthenticated } = useAuthStore();
   const t = useTranslations("nav");
+  const tNotif = useTranslations("notifications");
   const router = useRouter();
   const pathname = usePathname();
   
@@ -226,7 +227,7 @@ export default function Navbar({ onMenuClick, isSidebarOpen }: NavbarProps) {
                         </div>
                         <div>
                           <p className={`text-sm ${!notif.isRead ? 'font-bold text-slate-900' : 'text-slate-600'}`} dir="auto">
-                            {notif.payload && notif.payload.type ? t(notif.payload.type, { 
+                            {notif.payload && notif.payload.type ? tNotif(notif.payload.type, { 
                               amount: notif.payload.amount?.toLocaleString() || '', 
                               title: notif.payload.listingTitle || '', 
                               name: notif.payload.actorName || '' 
