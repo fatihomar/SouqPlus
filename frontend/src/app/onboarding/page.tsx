@@ -104,7 +104,16 @@ export default function Onboarding() {
         <div className="text-xl font-bold tracking-tight text-slate-900">
           Souq<span className="text-primary">+</span>
         </div>
-        <div className="w-10 h-10"></div> {/* Spacer to center the logo */}
+        {step < onboardingSteps.length - 1 ? (
+          <button 
+            onClick={() => router.push("/home")}
+            className="text-sm font-bold text-slate-500 hover:text-slate-900 px-4 py-2 transition-colors"
+          >
+            {t("skip")}
+          </button>
+        ) : (
+          <div className="w-10 h-10"></div>
+        )}
       </div>
 
       <div className="w-full max-w-5xl flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center pb-10">
@@ -166,15 +175,6 @@ export default function Onboarding() {
             >
               {step === onboardingSteps.length - 1 ? t("getStarted") : t("next")}
             </Button>
-            {step < onboardingSteps.length - 1 && (
-              <Button 
-                variant="ghost" 
-                onClick={() => router.push("/home")}
-                className="w-full sm:w-auto text-slate-500 hover:text-slate-900 font-semibold"
-              >
-                {t("skip")}
-              </Button>
-            )}
           </div>
           
           {step === onboardingSteps.length - 1 && (
