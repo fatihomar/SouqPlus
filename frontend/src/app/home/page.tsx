@@ -186,7 +186,7 @@ export default function HomePage() {
               {/* Real Estate Image (Top on Mobile, Left on Desktop) */}
               <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[28%] lg:w-[30%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] z-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2000&auto=format&fit=crop" 
+                  src="/hero-realestate-new.jpg" 
                   alt="Luxury Villa" 
                   className="w-full h-full object-cover object-center md:object-right pointer-events-auto"
                 />
