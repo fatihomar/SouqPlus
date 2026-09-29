@@ -181,7 +181,7 @@ export default function HomePage() {
             </div>
 
             {/* Images Container (Stacked vertically on Mobile, Full background on Desktop) */}
-            <div className="relative h-[280px] sm:h-[320px] md:h-auto md:absolute md:inset-0 w-full overflow-hidden flex flex-col md:block z-0 pointer-events-none">
+            <div className="relative h-[320px] sm:h-[360px] md:h-auto md:absolute md:inset-0 w-full overflow-hidden flex flex-col md:block z-0 pointer-events-none rounded-t-[32px] md:rounded-none">
               
               {/* Real Estate Image (Top on Mobile, Left on Desktop) */}
               <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[28%] lg:w-[30%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] z-0">
@@ -201,12 +201,12 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Mobile Gradient: Fade to white at bottom (covers the bottom image smoothly) */}
-              <div className="md:hidden absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white via-white/95 to-transparent pointer-events-none z-20" />
+              {/* Mobile Gradient: Soft fade to white at bottom */}
+              <div className="md:hidden absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
             </div>
 
             {/* Content Container */}
-            <div className="relative z-20 w-full flex-1 flex flex-col justify-end md:justify-center md:items-center px-6 pb-8 md:p-14 -mt-10 md:mt-0 bg-transparent pointer-events-none">
+            <div className="relative z-20 w-full flex-1 flex flex-col justify-end md:justify-center md:items-center px-6 pb-8 md:p-14 pt-6 md:pt-0 bg-white md:bg-transparent pointer-events-none">
               {/* Main Text */}
               <div className="w-full md:w-[42%] lg:w-[38%] relative z-20 text-start pointer-events-auto md:-mt-6">
                 <h1 className="text-3xl sm:text-5xl lg:text-[46px] font-black leading-[1.2] md:leading-[1.15] mb-3 md:mb-5 tracking-tight text-slate-900 md:drop-shadow-sm">
