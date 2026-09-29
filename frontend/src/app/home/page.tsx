@@ -51,7 +51,12 @@ function FeaturedListingCard({ listing, t }: { listing: any; t: any }) {
          toast.success(t("removedFromFavorites"));
       }
     } catch (err: any) {
-      toast.error(t("errorGeneric"));
+      const serverMsg = err.response?.data?.error?.message || err.response?.data?.message;
+      if (serverMsg === 'لا يمكنك إضافة إعلانك الخاص إلى المفضلة' || serverMsg === 'You cannot favorite your own listing') {
+        toast.error(t("cannotFavoriteOwn"));
+      } else {
+        toast.error(typeof serverMsg === 'string' ? serverMsg : t("errorGeneric"));
+      }
     } finally {
       setIsLiking(false);
     }
