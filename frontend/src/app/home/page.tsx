@@ -238,7 +238,7 @@ export default function HomePage() {
               <div className="absolute inset-0 z-10 bg-gradient-to-r rtl:bg-gradient-to-l from-white from-45% via-white/80 to-transparent" />
 
               {/* Content (Start side) */}
-              <div className="relative z-20 p-6 sm:p-8 lg:p-10 flex flex-col justify-start h-full max-w-[70%]">
+              <div className="relative z-20 p-6 sm:p-8 lg:p-10 flex flex-col justify-start h-full max-w-[60%]">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 text-primary rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shrink-0">
                   <HomeIcon className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
                 </div>
@@ -267,7 +267,7 @@ export default function HomePage() {
               <div className="absolute inset-0 z-10 bg-gradient-to-l rtl:bg-gradient-to-r md:bg-gradient-to-r md:rtl:bg-gradient-to-l from-white from-45% via-white/80 to-transparent" />
 
               {/* Content (End on Mobile, Start on Desktop) */}
-              <div className="relative z-20 p-6 sm:p-8 lg:p-10 flex flex-col justify-start items-end text-end md:items-start md:text-start h-full max-w-[70%] ms-auto md:ms-0">
+              <div className="relative z-20 p-6 sm:p-8 lg:p-10 flex flex-col justify-start items-end text-end md:items-start md:text-start h-full max-w-[60%] ms-auto md:ms-0">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 text-primary rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 shrink-0">
                   <Car className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
                 </div>
