@@ -1,6 +1,4 @@
-import { getAuthToken } from './auth.service';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+import axiosInstance from '../lib/axios';
 
 export const getExternalListings = async (filters: Record<string, string> = {}) => {
   try {
@@ -12,16 +10,8 @@ export const getExternalListings = async (filters: Record<string, string> = {}) 
       }
     });
 
-    const response = await fetch(`${API_URL}/external-listings?${params.toString()}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(getAuthToken() ? { Authorization: `Bearer ${getAuthToken()}` } : {})
-      },
-    });
-
-    const data = await response.json();
-    return data;
+    const response = await axiosInstance.get(`/external-listings?${params.toString()}`);
+    return response.data;
   } catch (error) {
     console.error('Error fetching external listings:', error);
     return { success: false, error: 'Failed to fetch external listings' };
@@ -30,16 +20,8 @@ export const getExternalListings = async (filters: Record<string, string> = {}) 
 
 export const getExternalListingById = async (id: string) => {
   try {
-    const response = await fetch(`${API_URL}/external-listings/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(getAuthToken() ? { Authorization: `Bearer ${getAuthToken()}` } : {})
-      },
-    });
-
-    const data = await response.json();
-    return data;
+    const response = await axiosInstance.get(`/external-listings/${id}`);
+    return response.data;
   } catch (error) {
     console.error('Error fetching external listing:', error);
     return { success: false, error: 'Failed to fetch external listing details' };
