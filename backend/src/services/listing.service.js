@@ -161,7 +161,7 @@ class ListingService {
    */
   async getListingById(id, viewerId) {
     const listing = await prisma.listing.findUnique({
-      where: { id, status: 'ACTIVE' },
+      where: { id },
       include: {
         seller: { select: { id: true, fullName: true, isVerified: true, phoneNumber: true } },
         propertyDetails: true,
@@ -170,7 +170,15 @@ class ListingService {
     });
 
     if (!listing) {
-      const err = new Error('الإعلان غير موجود أو غير نشط');
+      const err = new Error('الإعلان غير موجود أو تم حذفه');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    // Protect non-public listings from being viewed by other users
+    const publicStatuses = ['ACTIVE', 'SOLD', 'RENTED'];
+    if (!publicStatuses.includes(listing.status) && listing.sellerId !== viewerId) {
+      const err = new Error('الإعلان غير متاح حالياً');
       err.statusCode = 404;
       throw err;
     }
