@@ -184,7 +184,7 @@ export default function HomePage() {
             <div className="relative h-[320px] sm:h-[360px] md:h-auto md:absolute md:inset-0 w-full overflow-hidden flex flex-col md:block z-0 pointer-events-none rounded-t-[32px] md:rounded-none">
               
               {/* Real Estate Image (Top on Mobile, Left on Desktop) */}
-              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[28%] lg:w-[30%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] z-0">
+              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:start-0 md:bottom-0 md:w-[33%] lg:w-[36%] md:ltr:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] md:rtl:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] z-0">
                 <img 
                   src="/hero-realestate-new.jpg" 
                   alt="Luxury Villa" 
@@ -193,7 +193,7 @@ export default function HomePage() {
               </div>
 
               {/* Cars Image (Bottom on Mobile, Right on Desktop) */}
-              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:end-0 md:bottom-0 md:w-[30%] lg:w-[32%] z-10 md:ltr:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] md:rtl:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] pointer-events-auto">
+              <div className="w-full h-1/2 md:h-full relative md:absolute md:top-0 md:end-0 md:bottom-0 md:w-[35%] lg:w-[38%] z-10 md:ltr:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] md:rtl:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] pointer-events-auto">
                 <img 
                   src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=2000&auto=format&fit=crop" 
                   alt="Luxury Car" 
@@ -208,12 +208,12 @@ export default function HomePage() {
             {/* Content Container */}
             <div className="relative z-20 w-full flex-1 flex flex-col justify-end md:justify-center md:items-center px-6 pb-8 md:p-14 pt-6 md:pt-0 bg-white md:bg-transparent pointer-events-none">
               {/* Main Text */}
-              <div className="w-full md:w-[42%] lg:w-[38%] relative z-20 text-start pointer-events-auto md:-mt-6">
-                <h1 className="text-3xl sm:text-5xl lg:text-[46px] font-black leading-[1.2] md:leading-[1.15] mb-3 md:mb-5 tracking-tight text-slate-900 md:drop-shadow-sm">
+              <div className="w-full md:w-[38%] lg:w-[33%] relative z-20 text-start pointer-events-auto md:-mt-6">
+                <h1 className="text-3xl sm:text-5xl lg:text-[42px] font-black leading-[1.2] md:leading-[1.15] mb-3 md:mb-5 tracking-tight text-slate-900 md:drop-shadow-sm">
                   {t("heroFind")} <span className="text-primary">{t("heroHouse")}</span><br className="hidden md:block" />{" "}
                   {t("heroForSale")} <span className="text-primary">{t("heroForRent")}</span>
                 </h1>
-                <p className="text-[13.5px] sm:text-base lg:text-[16px] text-slate-600 font-medium mb-6 md:mb-8 leading-relaxed md:drop-shadow-sm md:pe-4">
+                <p className="text-[13.5px] sm:text-base lg:text-[15px] text-slate-600 font-medium mb-6 md:mb-8 leading-relaxed md:drop-shadow-sm md:pe-2">
                   {t("heroSubtitle")}
                 </p>
                 <Link href="/explore" className="inline-flex items-center justify-center px-7 md:px-8 py-3 md:py-3.5 bg-primary hover:bg-primary-dark text-white font-bold rounded-full shadow-lg shadow-primary/20 transition-all hover:-translate-y-0.5 text-sm md:text-base">
