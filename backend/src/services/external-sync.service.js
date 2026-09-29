@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../config/prisma.js';
 import carapisService from '../integrations/providers/carapis/carapis.service.js';
 import realEstateService from '../integrations/providers/real-estate/real-estate.service.js';
-
-const prisma = new PrismaClient();
 
 class ExternalSyncService {
   async syncListings(providerName, params = {}) {

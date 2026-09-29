@@ -485,7 +485,9 @@
     "sort": "ترتيب",
     "noResults": "لم نجد ما تبحث عنه",
     "tryDifferentFilters": "جرب تغيير الفلاتر للحصول على نتائج أكثر",
-    "clearFilters": "إزالة الفلاتر"
+    "clearFilters": "إزالة الفلاتر",
+    "souqListings": "إعلانات سوق+",
+    "externalListings": "إعلانات خارجية"
   },
   "admin": {
     "dashboard": "الإحصائيات",

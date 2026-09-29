@@ -510,7 +510,9 @@
     "sort": "Sort",
     "noResults": "No results found",
     "tryDifferentFilters": "Try changing the filters to get more results",
-    "clearFilters": "Clear Filters"
+    "clearFilters": "Clear Filters",
+    "souqListings": "Souq+ Listings",
+    "externalListings": "External Listings"
   },
   "admin": {
     "dashboard": "Dashboard",
