@@ -112,7 +112,6 @@ import offersRoutes from './routes/offers.routes.js';
 import aiRoutes from './routes/ai.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import myListingsStatsRoutes from './routes/myListingsStats.routes.js';
-import externalListingsRoutes from './routes/external-listings.routes.js';
 
 app.use(['/api/auth', '/api/v1/auth'], authRoutes);
 app.use(['/api/listings', '/api/v1/listings'], listingRoutes);
@@ -124,7 +123,6 @@ app.use(['/api/notifications', '/api/v1/notifications'], notificationsRoutes);
 app.use(['/api/offers', '/api/v1/offers'], offersRoutes);
 app.use(['/api/ai', '/api/v1/ai'], aiRoutes);
 app.use(['/api/admin', '/api/v1/admin'], adminRoutes);
-app.use(['/api/external-listings', '/api/v1/external-listings'], externalListingsRoutes);
 
 // Basic 404 Route (لمعالجة الروابط غير الموجودة)
 app.use((req, res, next) => {
