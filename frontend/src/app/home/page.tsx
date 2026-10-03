@@ -299,7 +299,7 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-[28px] font-black text-slate-900">{t("featuredListings")}</h2>
             
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="hidden sm:flex items-center gap-2 me-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <button 
                   onClick={() => {
                     if (scrollContainerRef.current) {
@@ -307,9 +307,9 @@ export default function HomePage() {
                       scrollContainerRef.current.scrollBy({ left: isRtl ? 320 : -320, behavior: 'smooth' });
                     }
                   }} 
-                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
                 >
-                  <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
                 </button>
                 <button 
                   onClick={() => {
@@ -318,14 +318,14 @@ export default function HomePage() {
                       scrollContainerRef.current.scrollBy({ left: isRtl ? -320 : 320, behavior: 'smooth' });
                     }
                   }} 
-                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
                 >
-                  <ChevronRight className="w-5 h-5 rtl:rotate-180" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
                 </button>
               </div>
 
-              <Link href="/explore" className="text-primary font-bold hover:text-primary-dark transition-colors flex items-center text-sm sm:text-base bg-primary/5 hover:bg-primary/10 px-4 py-2 rounded-full">
-                {t("viewAll")} <ArrowRight className="w-4 h-4 ms-1.5 rtl:rotate-180" strokeWidth={2.5} />
+              <Link href="/explore" className="text-primary font-bold hover:text-primary-dark transition-colors flex items-center text-xs sm:text-base bg-primary/5 hover:bg-primary/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full ms-1 sm:ms-2">
+                {t("viewAll")} <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ms-1 sm:ms-1.5 rtl:rotate-180" strokeWidth={2.5} />
               </Link>
             </div>
           </div>
