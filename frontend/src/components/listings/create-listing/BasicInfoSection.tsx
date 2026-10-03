@@ -195,7 +195,7 @@ export function BasicInfoSection({ errors, tErrors }: BasicInfoSectionProps) {
                 type="number"
                 dir="ltr"
                 className="h-11 rounded-lg bg-slate-50 border-slate-200 text-start"
-                value={(formData.propertyDetails as any)?.year || ''}
+                value={(formData.propertyDetails as any)?.year ?? ''}
                 onChange={(e) => updateFormData({ propertyDetails: { ...formData.propertyDetails, year: e.target.value === '' ? '' : Number(e.target.value) } as any })}
               />
               {errors.car_year && <p className="text-xs text-red-500">{errors.car_year && (tErrors(errors.car_year as any) || errors.car_year)}</p>}
@@ -206,7 +206,7 @@ export function BasicInfoSection({ errors, tErrors }: BasicInfoSectionProps) {
                 type="number"
                 dir="ltr"
                 className="h-11 rounded-lg bg-slate-50 border-slate-200 text-start"
-                value={(formData.propertyDetails as any)?.mileage || ''}
+                value={(formData.propertyDetails as any)?.mileage ?? ''}
                 onChange={(e) => updateFormData({ propertyDetails: { ...formData.propertyDetails, mileage: e.target.value === '' ? '' : Number(e.target.value) } as any })}
               />
               {errors.car_mileage && <p className="text-xs text-red-500">{errors.car_mileage && (tErrors(errors.car_mileage as any) || errors.car_mileage)}</p>}

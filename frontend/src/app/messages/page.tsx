@@ -15,6 +15,7 @@ export default function MessagesPage() {
   const [conversations, setConversations] = useState<any[]>([]);
   const [activeUser, setActiveUser] = useState<any | null>(null);
   const [messages, setMessages] = useState<any[]>([]);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [newMessage, setNewMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,6 +36,8 @@ export default function MessagesPage() {
       if (res.success) setConversations(res.data);
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsInitialLoad(false);
     }
   };
 
@@ -124,7 +127,11 @@ export default function MessagesPage() {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">
-            {filteredConversations.length === 0 ? (
+            {isInitialLoad ? (
+              <div className="p-8 flex justify-center items-center text-slate-400">
+                <Loader2 className="w-6 h-6 animate-spin" />
+              </div>
+            ) : filteredConversations.length === 0 ? (
               <div className="p-8 text-center text-slate-400 text-sm">
                 {t("noMatches")}
               </div>
@@ -254,7 +261,7 @@ export default function MessagesPage() {
                         )}
                         <div className={`flex items-center justify-end gap-1 text-[10px] mt-1.5 ${isMine ? "text-white/80" : "text-slate-400"}`} dir="ltr">
                           <span>{time}</span>
-                          {isMine && <CheckCheck className="w-3.5 h-3.5" />}
+                          {isMine && <CheckCheck className={`w-3.5 h-3.5 ${msg.isRead ? "text-blue-300" : ""}`} />}
                         </div>
                       </div>
                     </div>
