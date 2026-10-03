@@ -19,13 +19,13 @@ export default function SettingsPage() {
           <h1 className="text-2xl font-black text-slate-900">{t("settings")}</h1>
         </div>
 
-        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm">
           <div className="p-6 border-b border-slate-100">
             <h2 className="text-lg font-bold text-slate-900 mb-1">
-              {locale === 'ar' ? 'اللغة والمنطقة' : 'Language & Region'}
+              {locale === 'ar' ? 'اللغة والمنطقة' : locale === 'tr' ? 'Dil ve Bölge' : 'Language & Region'}
             </h2>
             <p className="text-sm text-slate-500">
-              {locale === 'ar' ? 'تغيير لغة العرض الخاصة بالموقع' : 'Change the display language of the website'}
+              {locale === 'ar' ? 'تغيير لغة العرض الخاصة بالموقع' : locale === 'tr' ? 'Web sitesinin görüntüleme dilini değiştirin' : 'Change the display language of the website'}
             </p>
           </div>
           
@@ -36,10 +36,10 @@ export default function SettingsPage() {
               </div>
               <div>
                 <h3 className="font-bold text-slate-900">
-                  {locale === 'ar' ? 'لغة الموقع' : 'Display Language'}
+                  {locale === 'ar' ? 'لغة الموقع' : locale === 'tr' ? 'Site Dili' : 'Display Language'}
                 </h3>
                 <p className="text-sm text-slate-500">
-                  {locale === 'ar' ? 'اختر اللغة المفضلة لك' : 'Choose your preferred language'}
+                  {locale === 'ar' ? 'اختر اللغة المفضلة لك' : locale === 'tr' ? 'Tercih ettiğiniz dili seçin' : 'Choose your preferred language'}
                 </p>
               </div>
             </div>

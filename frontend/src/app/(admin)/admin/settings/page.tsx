@@ -43,7 +43,7 @@ export default function AdminSettingsPage() {
       setSaving(true);
       const res = await updateSettings(settings);
       if (res.success) {
-        toast.success(t('saveChanges') + ' ' + (locale === 'ar' ? 'بنجاح' : 'Successful'));
+        toast.success(t('saveChanges') + ' ' + (locale === 'ar' ? 'بنجاح' : locale === 'tr' ? 'Başarılı' : 'Successful'));
         setSettings(prev => ({ ...prev, ...res.data }));
       }
     } catch (error) {
@@ -109,7 +109,7 @@ export default function AdminSettingsPage() {
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
               <div>
                 <h3 className="font-bold text-slate-900">{t('maintenanceMode')}</h3>
-                <p className="text-xs text-slate-500 mt-0.5">{(locale === 'ar' ? 'إيقاف المنصة مؤقتاً للصيانة' : 'Temporarily disable the platform')}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{(locale === 'ar' ? 'إيقاف المنصة مؤقتاً للصيانة' : locale === 'tr' ? 'Platformu geçici olarak devre dışı bırakın' : 'Temporarily disable the platform')}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={settings.MAINTENANCE_MODE === 'true'} onChange={(e) => handleChange('MAINTENANCE_MODE', e.target.checked ? 'true' : 'false')} />
@@ -156,7 +156,7 @@ export default function AdminSettingsPage() {
             <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
               <div>
                 <h3 className="font-bold text-slate-900">{t('listingModeration')}</h3>
-                <p className="text-xs text-slate-500 mt-0.5">{(locale === 'ar' ? 'مراجعة الإعلانات قبل النشر' : 'Review listings before publishing')}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{(locale === 'ar' ? 'مراجعة الإعلانات قبل النشر' : locale === 'tr' ? 'Yayınlamadan önce ilanları inceleyin' : 'Review listings before publishing')}</p>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" className="sr-only peer" checked={settings.REQUIRE_LISTING_APPROVAL === 'true'} onChange={(e) => handleChange('REQUIRE_LISTING_APPROVAL', e.target.checked ? 'true' : 'false')} />
@@ -179,7 +179,7 @@ export default function AdminSettingsPage() {
           </div>
           <div className="p-4 md:p-6">
             <p className="text-sm text-slate-500 mb-4 leading-relaxed">
-              {(locale === 'ar' ? 'هذا الإعداد يغير لغة الواجهة الخاصة بك حالياً فقط، لا يتم حفظه في قاعدة البيانات العامة.' : 'This setting changes your current interface language only, not saved globally.')}
+              {(locale === 'ar' ? 'هذا الإعداد يغير لغة الواجهة الخاصة بك حالياً فقط، لا يتم حفظه في قاعدة البيانات العامة.' : locale === 'tr' ? 'Bu ayar yalnızca şu anki arayüz dilinizi değiştirir, küresel veritabanına kaydedilmez.' : 'This setting changes your current interface language only, not saved globally.')}
             </p>
             <div className="bg-slate-50 p-2 rounded-xl border border-slate-100 flex justify-center">
               <LanguageSwitcher />
