@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import { getListings } from "@/services/listing.service";
 import {
@@ -13,7 +13,9 @@ import {
   Bath,
   Maximize,
   Gauge,
-  Calendar
+  Calendar,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -144,6 +146,7 @@ function FeaturedListingCard({ listing, t }: { listing: any; t: any }) {
 export default function HomePage() {
   const [latestListings, setLatestListings] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("home");
 
   useEffect(() => {
@@ -294,21 +297,60 @@ export default function HomePage() {
           <div className="max-w-[1400px] mx-auto px-4 sm:px-8 lg:px-12 w-full mb-10">
           <div className="flex justify-between items-end mb-6">
             <h2 className="text-2xl sm:text-[28px] font-black text-slate-900">{t("featuredListings")}</h2>
-            <Link href="/explore" className="text-primary font-bold hover:text-primary-dark transition-colors flex items-center text-sm sm:text-base">
-              {t("viewAll")} <ArrowRight className="w-4 h-4 ms-1.5 rtl:rotate-180" strokeWidth={2.5} />
-            </Link>
+            
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="hidden sm:flex items-center gap-2 me-2">
+                <button 
+                  onClick={() => {
+                    if (scrollContainerRef.current) {
+                      const isRtl = document.documentElement.dir === 'rtl';
+                      scrollContainerRef.current.scrollBy({ left: isRtl ? 320 : -320, behavior: 'smooth' });
+                    }
+                  }} 
+                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
+                >
+                  <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
+                </button>
+                <button 
+                  onClick={() => {
+                    if (scrollContainerRef.current) {
+                      const isRtl = document.documentElement.dir === 'rtl';
+                      scrollContainerRef.current.scrollBy({ left: isRtl ? -320 : 320, behavior: 'smooth' });
+                    }
+                  }} 
+                  className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
+                >
+                  <ChevronRight className="w-5 h-5 rtl:rotate-180" />
+                </button>
+              </div>
+
+              <Link href="/explore" className="text-primary font-bold hover:text-primary-dark transition-colors flex items-center text-sm sm:text-base bg-primary/5 hover:bg-primary/10 px-4 py-2 rounded-full">
+                {t("viewAll")} <ArrowRight className="w-4 h-4 ms-1.5 rtl:rotate-180" strokeWidth={2.5} />
+              </Link>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {latestListings.slice(0, 4).map((listing: any, index) => (
-              <FeaturedListingCard key={index} listing={listing} t={t} />
+          <div 
+            ref={scrollContainerRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {/* Inject minimal style for scrollbar-hide just in case */}
+            <style dangerouslySetInnerHTML={{__html: `
+              .scrollbar-hide::-webkit-scrollbar { display: none; }
+            `}} />
+
+            {latestListings.slice(0, 10).map((listing: any, index) => (
+              <div key={index} className="w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] shrink-0 snap-center sm:snap-start">
+                <FeaturedListingCard listing={listing} t={t} />
+              </div>
             ))}
             
             {/* Loading Skeletons */}
             {isLoading && (
               <>
                 {[1,2,3,4].map(i => (
-                  <div key={i} className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm h-[380px] animate-pulse flex flex-col">
+                  <div key={i} className="w-[85vw] sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)] shrink-0 snap-center sm:snap-start bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-sm h-[380px] animate-pulse flex flex-col">
                     <div className="h-[200px] bg-slate-100 w-full" />
                     <div className="p-5 flex-1 flex flex-col">
                       <div className="h-5 bg-slate-100 rounded-full w-3/4 mb-3" />
