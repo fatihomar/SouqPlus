@@ -17,6 +17,7 @@ export default function ExplorePage() {
   
   const [listings, setListings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
   // استخراج الفلاتر الحالية من الرابط
@@ -31,9 +32,12 @@ export default function ExplorePage() {
     const fetchListings = async () => {
       try {
         setLoading(true);
-        const res = await getListings(currentFilters);
+        const res = await getListings({ ...currentFilters, limit: 10 });
         if (res.success) {
           setListings(res.data);
+          if (res.pagination) {
+            setPagination(res.pagination);
+          }
         } else {
           setListings([]);
         }
@@ -98,6 +102,7 @@ export default function ExplorePage() {
     delete newFilters.listingType;
     delete newFilters.propertyType;
     delete newFilters.condition;
+    delete newFilters.page; // Reset page when changing category chips
 
     handleFilterChange({ ...newFilters, ...chipValue });
   };
@@ -163,7 +168,7 @@ export default function ExplorePage() {
           <div className="hidden lg:block w-[320px] sticky top-28 shrink-0 h-[calc(100vh-140px)]">
             <FiltersSidebar 
               initialFilters={currentFilters} 
-              onFilterChange={handleFilterChange} 
+              onFilterChange={(newFilters) => handleFilterChange({ ...newFilters, page: "1" })} 
             />
           </div>
 
@@ -178,7 +183,7 @@ export default function ExplorePage() {
                 <div className="h-full px-2 pb-6">
                   <FiltersSidebar 
                     initialFilters={currentFilters} 
-                    onFilterChange={handleFilterChange} 
+                    onFilterChange={(newFilters) => handleFilterChange({ ...newFilters, page: "1" })} 
                     onClose={() => setIsMobileFiltersOpen(false)}
                   />
                 </div>
@@ -193,11 +198,42 @@ export default function ExplorePage() {
                 <div className="animate-spin rounded-full h-10 w-10 border-4 border-slate-100 border-t-primary"></div>
               </div>
             ) : listings.length > 0 ? (
-              <div className={`grid ${listings.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6`}>
-                {listings.map((listing) => (
-                  <ListingCard key={listing.id} listing={listing} />
-                ))}
-              </div>
+              <>
+                <div className={`grid ${listings.length === 1 ? 'grid-cols-1' : 'grid-cols-2'} md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6`}>
+                  {listings.map((listing) => (
+                    <ListingCard key={listing.id} listing={listing} />
+                  ))}
+                </div>
+                
+                {/* Pagination Controls */}
+                {pagination.pages > 1 && (
+                  <div className="flex justify-center items-center gap-4 mt-8 pb-4">
+                    <button 
+                      disabled={pagination.page <= 1}
+                      onClick={() => {
+                        handleFilterChange({ ...currentFilters, page: String(pagination.page - 1) });
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm disabled:opacity-50 hover:bg-slate-50 transition-colors text-slate-700"
+                    >
+                      <ChevronRight className="w-5 h-5 rtl:rotate-180" />
+                    </button>
+                    <span className="text-sm font-bold text-slate-700">
+                      {pagination.page} / {pagination.pages}
+                    </span>
+                    <button 
+                      disabled={pagination.page >= pagination.pages}
+                      onClick={() => {
+                        handleFilterChange({ ...currentFilters, page: String(pagination.page + 1) });
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 shadow-sm disabled:opacity-50 hover:bg-slate-50 transition-colors text-slate-700"
+                    >
+                      <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
+                    </button>
+                  </div>
+                )}
+              </>
             ) : (
               <div className="flex flex-col items-center justify-center py-32 text-slate-400 bg-white rounded-[2rem] border border-slate-100 shadow-sm">
                 <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4">
