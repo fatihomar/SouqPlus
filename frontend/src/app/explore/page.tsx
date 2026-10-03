@@ -7,7 +7,7 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import { getListings } from "@/services/listing.service";
 import ListingCard from "@/components/listings/ListingCard";
 import FiltersSidebar from "@/components/explore/FiltersSidebar";
-import { SlidersHorizontal, Search, Home as HomeIcon, ChevronLeft } from "lucide-react";
+import { SlidersHorizontal, Search, Home as HomeIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export default function ExplorePage() {
