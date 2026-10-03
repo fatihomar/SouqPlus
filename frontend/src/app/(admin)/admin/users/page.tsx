@@ -3,49 +3,38 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminUsers, toggleUserBan } from '@/services/admin.service';
 import { toast } from 'react-hot-toast';
+import useSWR from 'swr';
 import { Ban, CheckCircle2, Search, Filter, MoreVertical } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export default function AdminUsersPage() {
   const t = useTranslations('admin');
-  const [users, setUsers] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [userToBan, setUserToBan] = useState<any>(null);
   
   // Filters
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [role, setRole] = useState('');
   const [banned, setBanned] = useState('');
 
-  const fetchUsers = async (currentPage: number, currentSearch: string, currentRole: string, currentBanned: string) => {
-    try {
-      setLoading(true);
-      const data = await getAdminUsers(
-        currentPage, 
-        20, 
-        currentSearch || undefined, 
-        currentRole || undefined, 
-        currentBanned !== '' ? currentBanned === 'true' : undefined
-      );
-      if (data.success) {
-        setUsers(data.users);
-        if (data.pagination) setTotalPages(data.pagination.pages);
-      }
-    } catch (error) {
-      toast.error(t('noData'));
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchUsers(page, search, role, banned);
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      if (search !== debouncedSearch) setPage(1);
     }, 300);
-    return () => clearTimeout(delayDebounceFn);
-  }, [page, search, role, banned]);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const { data, error, mutate, isLoading } = useSWR(
+    ['admin-users', page, debouncedSearch, role, banned],
+    () => getAdminUsers(page, 20, debouncedSearch || undefined, role || undefined, banned !== '' ? banned === 'true' : undefined),
+    { keepPreviousData: true }
+  );
+
+  const users = data?.users || [];
+  const totalPages = data?.pagination?.pages || 1;
+  const loading = isLoading && !data;
 
   const confirmBan = async () => {
     if (!userToBan) return;
@@ -53,7 +42,7 @@ export default function AdminUsersPage() {
       const res = await toggleUserBan(userToBan.id);
       if (res.success) {
         toast.success(res.message);
-        setUsers(users.map(u => u.id === userToBan.id ? { ...u, isBanned: !u.isBanned } : u));
+        mutate();
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || error.response?.data?.error?.message || t('noData'));
@@ -78,7 +67,7 @@ export default function AdminUsersPage() {
             type="text" 
             placeholder={t('searchUsers')}
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            onChange={(e) => { setSearch(e.target.value); }}
             className="w-full h-12 bg-white shadow-sm border border-slate-100 rounded-xl rtl:pr-4 rtl:pl-12 ltr:pl-12 ltr:pr-4 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all"
           />
         </div>

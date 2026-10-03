@@ -3,50 +3,39 @@
 import React, { useEffect, useState } from 'react';
 import { getAdminListings, updateListingStatus } from '@/services/admin.service';
 import { toast } from 'react-hot-toast';
+import useSWR from 'swr';
 import { CheckCircle2, Clock, Trash2, ShieldAlert, Image as ImageIcon, Search, Filter, ExternalLink } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 export default function AdminListingsPage() {
   const t = useTranslations('admin');
-  const [listings, setListings] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [listingToUpdate, setListingToUpdate] = useState<{listing: any, newStatus: string} | null>(null);
 
   // Filters
   const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
   const [status, setStatus] = useState('');
   const [category, setCategory] = useState('');
 
-  const fetchListings = async (currentPage: number, currentSearch: string, currentStatus: string, currentCategory: string) => {
-    try {
-      setLoading(true);
-      const data = await getAdminListings(
-        currentPage, 
-        20, 
-        currentStatus || undefined,
-        currentSearch || undefined,
-        currentCategory || undefined
-      );
-      if (data.success) {
-        setListings(data.listings);
-        if (data.pagination) setTotalPages(data.pagination.pages);
-      }
-    } catch (error) {
-      toast.error(t('noData'));
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchListings(page, search, status, category);
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+      if (search !== debouncedSearch) setPage(1);
     }, 300);
-    return () => clearTimeout(delayDebounceFn);
-  }, [page, search, status, category]);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  const { data, error, mutate, isLoading } = useSWR(
+    ['admin-listings', page, debouncedSearch, status, category],
+    () => getAdminListings(page, 20, status || undefined, debouncedSearch || undefined, category || undefined),
+    { keepPreviousData: true }
+  );
+
+  const listings = data?.listings || [];
+  const totalPages = data?.pagination?.pages || 1;
+  const loading = isLoading && !data;
 
   const confirmStatusUpdate = async () => {
     if (!listingToUpdate) return;
@@ -54,7 +43,7 @@ export default function AdminListingsPage() {
       const res = await updateListingStatus(listingToUpdate.listing.id, listingToUpdate.newStatus);
       if (res.success) {
         toast.success(t('saveChanges'));
-        setListings(listings.map(l => l.id === listingToUpdate.listing.id ? { ...l, status: listingToUpdate.newStatus } : l));
+        mutate();
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || t('noData'));
@@ -90,7 +79,7 @@ export default function AdminListingsPage() {
             type="text" 
             placeholder={t('searchListings')}
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            onChange={(e) => { setSearch(e.target.value); }}
             className="w-full h-12 bg-white shadow-sm border border-slate-100 rounded-xl rtl:pr-4 rtl:pl-12 ltr:pl-12 ltr:pr-4 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all"
           />
         </div>
