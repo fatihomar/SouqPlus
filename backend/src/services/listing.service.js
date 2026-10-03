@@ -9,9 +9,14 @@ class ListingService {
     // تجهيز البيانات
     const { propertyDetails, carDetails, ...coreData } = data;
 
-    // تطبيق القواعد الأمنية: 
-    // 1. تجاهل أي حالة (status) ممررة وفرض ACTIVE دائماً
-    coreData.status = 'ACTIVE';
+    // 1. قراءة إعدادات النظام لمعرفة إذا كانت الإعلانات تحتاج مراجعة
+    const requireApprovalSetting = await prisma.systemSetting.findUnique({
+      where: { key: 'REQUIRE_LISTING_APPROVAL' }
+    });
+    const requireApproval = requireApprovalSetting?.value === 'true';
+
+    // 2. تعيين الحالة المبدئية للإعلان
+    coreData.status = requireApproval ? 'PENDING_REVIEW' : 'ACTIVE';
 
     // 2. إذا كان البيع SALE نتأكد من مسح الـ rentPeriod
     if (coreData.listingType === 'SALE') {

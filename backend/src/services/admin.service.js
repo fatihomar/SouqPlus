@@ -252,14 +252,14 @@ class AdminService {
   async updateReportStatus(adminId, reportId, status) {
     const report = await prisma.report.findUnique({ where: { id: reportId } });
     if (!report) {
-      const error = new Error('OU,OU,OO OUSO U.U^OU^O_');
+      const error = new Error('البلاغ غير موجود');
       error.statusCode = 404;
       throw error;
     }
 
     const validStatuses = ['PENDING', 'REVIEWING', 'RESOLVED', 'REJECTED'];
     if (!validStatuses.includes(status)) {
-      const error = new Error('O-O U,Oc OUSO OO U,O-Oc');
+      const error = new Error('حالة البلاغ غير صالحة');
       error.statusCode = 400;
       throw error;
     }
@@ -273,7 +273,7 @@ class AdminService {
         data: {
           actorId: adminId,
           action: 'UPDATE_REPORT_STATUS',
-          details: `OU. OOUSUSO O-O U,Oc OU,OU,OO (${report.id}) OU,U% ${status}`
+          details: `تم تحديث حالة البلاغ (${report.id}) إلى ${status}`
         }
       })
     ]);
@@ -305,7 +305,7 @@ class AdminService {
         data: {
           actorId: adminId,
           action: 'UPDATE_SYSTEM_SETTINGS',
-          details: 'OU. OO-O_USO OO1O_OO_OO OU,U+O,OU.'
+          details: 'تم تحديث إعدادات النظام بنجاح'
         }
       })
     ]);

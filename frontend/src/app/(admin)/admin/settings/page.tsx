@@ -167,7 +167,7 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* System Settings */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100">
           <div className="p-4 md:p-6 border-b border-slate-50 flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center text-primary-dark shrink-0">
               <Globe className="w-5 h-5" />

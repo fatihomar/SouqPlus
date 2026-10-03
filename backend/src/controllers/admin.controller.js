@@ -88,7 +88,7 @@ class AdminController {
       const report = await adminService.updateReportStatus(adminId, id, status);
       res.status(200).json({
         success: true,
-        message: 'OU. OOUSUSO O-O U,Oc OU,OU,OO',
+        message: 'تم تحديث حالة البلاغ بنجاح',
         data: report
       });
     } catch (error) {
@@ -112,7 +112,7 @@ class AdminController {
       const updatedSettings = await adminService.updateSettings(adminId, settings);
       res.status(200).json({
         success: true,
-        message: 'OU. OO-O_USO OO1O_OO_OO OU,U+O,OU. O"U+OO O-',
+        message: 'تم تحديث إعدادات النظام بنجاح',
         data: updatedSettings
       });
     } catch (error) {
