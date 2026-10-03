@@ -22,12 +22,18 @@ export default function MessagesPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) {
+    if (isClient && !user) {
       router.push("/login");
     }
-  }, [user, router]);
+  }, [isClient, user, router]);
 
   // Load conversations initially
   const loadConversations = async () => {
