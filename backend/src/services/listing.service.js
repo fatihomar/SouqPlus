@@ -317,6 +317,40 @@ class ListingService {
 
     return { message: 'تم حذف الإعلان بنجاح' };
   }
+
+  /**
+   * الإبلاغ عن إعلان
+   */
+  async reportListing(userId, listingId, reason) {
+    const listing = await prisma.listing.findUnique({ where: { id: listingId } });
+    if (!listing || listing.status === 'DELETED') {
+      const err = new Error('الإعلان غير موجود');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    // التحقق مما إذا كان المستخدم قد أبلغ عن الإعلان مسبقاً
+    const existingReport = await prisma.report.findFirst({
+      where: { userId, listingId }
+    });
+
+    if (existingReport) {
+      const err = new Error('لقد قمت بالإبلاغ عن هذا الإعلان مسبقاً');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    const report = await prisma.report.create({
+      data: {
+        userId,
+        listingId,
+        reason,
+        status: 'PENDING'
+      }
+    });
+
+    return report;
+  }
 }
 
 export default new ListingService();

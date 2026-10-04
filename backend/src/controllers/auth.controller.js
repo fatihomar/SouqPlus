@@ -51,6 +51,19 @@ class AuthController {
     }
   }
 
+  async updateProfile(req, res, next) {
+    try {
+      const { fullName } = req.body;
+      const user = await authService.updateProfile(req.user.id, fullName);
+      res.status(200).json({
+        success: true,
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async logout(req, res, next) {
     try {
       // زيادة tokenVersion لإلغاء جميع الجلسات القديمة إذا كان المستخدم مسجلاً للدخول

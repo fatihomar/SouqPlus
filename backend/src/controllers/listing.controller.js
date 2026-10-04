@@ -110,6 +110,27 @@ class ListingController {
       next(error);
     }
   }
+
+  async reportListing(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const listingId = req.params.id;
+      const { reason } = req.body;
+
+      if (!reason) {
+        return res.status(400).json({ success: false, message: 'يرجى تحديد سبب البلاغ' });
+      }
+
+      await listingService.reportListing(userId, listingId, reason);
+
+      res.status(201).json({
+        success: true,
+        message: 'تم إرسال البلاغ بنجاح'
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default new ListingController();

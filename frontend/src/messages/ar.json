@@ -322,7 +322,19 @@
         "MONTHLY": "شهر",
         "YEARLY": "سنة"
       }
-    }
+    },
+    "reportListing": "الإبلاغ عن هذا الإعلان لوجود مخالفة",
+    "reportTitle": "الإبلاغ عن الإعلان",
+    "reportQuestion": "لماذا تريد الإبلاغ عن هذا الإعلان؟",
+    "reportReasonFraud": "احتيال أو إعلان مزيف",
+    "reportReasonInappropriate": "محتوى غير لائق أو مسيء",
+    "reportReasonWrongCategory": "الإعلان في القسم الخاطئ",
+    "reportReasonSold": "السلعة مباعة أو غير متوفرة",
+    "reportReasonOther": "أخرى",
+    "reportDetailsPlaceholder": "يرجى كتابة تفاصيل إضافية (اختياري)...",
+    "sendReport": "إرسال البلاغ",
+    "sendingReport": "جاري الإرسال...",
+    "reportSuccess": "تم إرسال البلاغ بنجاح، شكراً لك"
   },
   "createListing": {
     "pageTitle": "نشر إعلان جديد",
@@ -408,7 +420,6 @@
     "publishError": "فشل في نشر الإعلان",
     "updatingListing": "جاري التحديث...",
     "updateSuccess": "تم تحديث الإعلان بنجاح!",
-
     "aiImageLoading": "🤖 جاري فحص الصورة بالذكاء الاصطناعي...",
     "aiImageSuccess": "✅ صورة ممتازة ومطابقة للقسم",
     "aiImageWarning": "⚠️ الصورة قد لا تكون مطابقة، يرجى التأكد",

@@ -34,3 +34,8 @@ export const getMyListingsStats = async () => {
   return response.data;
 };
 
+export const reportListing = async (id: string, reason: string) => {
+  const response = await axiosInstance.post(`/listings/${id}/report`, { reason });
+  return response.data;
+};
+

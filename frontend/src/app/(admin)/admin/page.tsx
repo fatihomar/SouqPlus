@@ -273,11 +273,11 @@ export default function AdminDashboardPage() {
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Listings by Category Chart */}
+        {/* Listings by Category Chart - Hidden temporarily on localhost */}
+        {/* 
         <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 lg:col-span-1">
           <h3 className="font-bold text-slate-900 mb-6">{t('listingsByCategory')}</h3>
           <div className="flex flex-col items-center justify-center gap-6">
-            {/* CSS Pie Chart representation */}
             <div className="relative w-48 h-48 rounded-full flex items-center justify-center" 
                  style={{
                    background: 'conic-gradient(#087F5B 0% 60%, #EAF7F1 60% 88%, #065A42 88% 95%, #102A2A 95% 100%)'
@@ -300,9 +300,10 @@ export default function AdminDashboardPage() {
             </div>
           </div>
         </div>
+        */}
 
         {/* Recent Admin Activity */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col lg:col-span-2">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col lg:col-span-3">
           <div className="p-4 md:p-6 border-b border-slate-50 flex items-center justify-between">
             <h3 className="font-bold text-slate-900">{t('recentActivity')}</h3>
             <a href="/admin/logs" className="text-xs md:text-sm font-bold text-primary-dark hover:text-primary-dark">{t('viewAll')}</a>

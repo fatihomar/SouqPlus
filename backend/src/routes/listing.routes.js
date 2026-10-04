@@ -24,5 +24,6 @@ router.use(authGuard);
 router.post('/', validate(createListingSchema), listingController.createListing);
 router.put('/:id', validate(updateListingSchema), listingController.updateListing);
 router.delete('/:id', listingController.deleteListing);
+router.post('/:id/report', listingController.reportListing);
 
 export default router;

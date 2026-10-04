@@ -4,11 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth.store';
-import { LayoutDashboard, Users, Grid, LogOut, Search, Bell, Settings, FileText, ShieldCheck, Menu } from 'lucide-react';
+import { LayoutDashboard, Users, Grid, LogOut, Search, Bell, Settings, FileText, ShieldCheck, Menu, Home, X } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useTranslations, useLocale } from 'next-intl';
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ onClose, isMobile }: { onClose?: () => void, isMobile?: boolean }) => {
   const pathname = usePathname();
   const { logout } = useAuthStore();
   const router = useRouter();
@@ -33,12 +33,17 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <aside className="w-[260px] bg-white border-e border-slate-100 min-h-screen flex flex-col font-sans">
+    <aside className="w-[260px] bg-white border-e border-slate-100 h-full flex flex-col font-sans">
       {/* Logo */}
-      <div className="h-20 flex items-center px-8 border-b border-slate-50">
+      <div className="h-20 flex items-center justify-between px-8 border-b border-slate-50">
         <Link href="/admin" className="text-2xl font-black text-slate-900 tracking-tight">
           Souq<span className="text-primary">+</span>
         </Link>
+        {isMobile && (
+          <button onClick={onClose} className="p-2 -me-2 text-slate-400 hover:text-slate-600">
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Admin Profile Badge */}
@@ -64,6 +69,7 @@ const AdminSidebar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onClose}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive 
                       ? 'bg-primary-50 text-slate-900 font-bold' 
@@ -87,6 +93,7 @@ const AdminSidebar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onClose}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                     isActive 
                       ? 'bg-primary-50 text-slate-900 font-bold' 
@@ -102,7 +109,16 @@ const AdminSidebar = () => {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-slate-50">
+      <div className="p-4 border-t border-slate-50 space-y-2">
+        <Link
+          href="/"
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-primary bg-primary-50 hover:bg-primary-100 font-bold transition-colors w-full"
+        >
+          <Home className="w-5 h-5" />
+          <span className="text-sm">الرئيسية</span>
+        </Link>
+
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-slate-50 hover:text-slate-900 font-semibold transition-colors w-full"
@@ -123,8 +139,6 @@ const AdminBottomNav = () => {
     { name: t('dashboard'), href: '/admin', icon: LayoutDashboard },
     { name: t('users'), href: '/admin/users', icon: Users },
     { name: t('listings'), href: '/admin/listings', icon: Grid },
-    { name: t('reports'), href: '/admin/reports', icon: FileText },
-    { name: t('settings'), href: '/admin/settings', icon: Settings },
   ];
 
   return (
@@ -151,18 +165,26 @@ const AdminBottomNav = () => {
   );
 };
 
-const AdminTopbar = () => {
+const AdminTopbar = ({ onMenuClick, isDesktopSidebarOpen }: { onMenuClick: () => void, isDesktopSidebarOpen?: boolean }) => {
   const { user } = useAuthStore();
   const t = useTranslations('admin');
   const locale = useLocale();
   const isRtl = locale === 'ar';
   
   return (
-    <header className="h-16 md:h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-4 md:px-8 sticky top-0 z-30">
+    <header className="h-16 md:h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 transition-all">
       <div className="flex items-center gap-3">
-        {/* Mobile Logo */}
-        <div className="md:hidden">
-          <Link href="/admin" className="text-xl font-black text-slate-900 tracking-tight">
+        {/* Hamburger Menu - Mobile & Desktop */}
+        <button 
+          onClick={onMenuClick}
+          className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-colors shrink-0"
+        >
+          <Menu className="w-5 h-5" strokeWidth={1.5} />
+        </button>
+
+        {/* Mobile Logo & Desktop (when sidebar closed) */}
+        <div className={isDesktopSidebarOpen ? "md:hidden" : "flex"}>
+          <Link href="/admin" className="text-xl font-black text-slate-900 tracking-tight ms-1">
             Souq<span className="text-primary">+</span>
           </Link>
         </div>
@@ -184,11 +206,6 @@ const AdminTopbar = () => {
           <Search className="w-5 h-5" />
         </button>
 
-        <button className="relative text-slate-600 hover:text-primary transition-colors p-2 md:p-0">
-          <Bell className="w-5 h-5 md:w-6 md:h-6" />
-          <span className="absolute top-1 end-1 md:-top-1 md:-end-1 w-3.5 h-3.5 md:w-4 md:h-4 bg-primary border-2 border-white rounded-full flex items-center justify-center text-[8px] md:text-[9px] font-bold text-white">6</span>
-        </button>
-        
         <div className="flex items-center gap-3 md:ps-6 md:border-s border-slate-100">
           <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary-light flex items-center justify-center text-primary-dark font-bold text-sm md:text-lg shrink-0 border border-primary/20">
             {user?.fullName?.charAt(0).toUpperCase() || 'A'}
@@ -209,6 +226,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const t = useTranslations('admin');
   const locale = useLocale();
   const [mounted, setMounted] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = React.useState(true);
 
   React.useEffect(() => {
     setMounted(true);
@@ -234,11 +253,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen bg-slate-50">
-      <div className="hidden md:block">
-        <AdminSidebar />
+      {/* Desktop Sidebar */}
+      <div className={`hidden md:block sticky top-0 h-screen transition-all duration-300 ease-in-out overflow-hidden ${isDesktopSidebarOpen ? 'w-[260px]' : 'w-0'}`}>
+        <div className="w-[260px] h-full">
+          <AdminSidebar />
+        </div>
       </div>
-      <div className="flex-1 flex flex-col min-w-0">
-        <AdminTopbar />
+
+      {/* Mobile Drawer Sidebar */}
+      <div className={`fixed inset-0 z-[100] md:hidden transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`absolute inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMobileMenuOpen(false)} />
+        <div className={`absolute top-0 bottom-0 start-0 w-[260px] bg-white transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'rtl:translate-x-full ltr:-translate-x-full'}`}>
+          <AdminSidebar onClose={() => setIsMobileMenuOpen(false)} isMobile />
+        </div>
+      </div>
+
+      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
+        <AdminTopbar 
+          onMenuClick={() => {
+            if (window.innerWidth < 768) {
+              setIsMobileMenuOpen(true);
+            } else {
+              setIsDesktopSidebarOpen(!isDesktopSidebarOpen);
+            }
+          }} 
+          isDesktopSidebarOpen={isDesktopSidebarOpen}
+        />
         <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 overflow-auto">
           <div className="max-w-[1400px] mx-auto">
             {children}

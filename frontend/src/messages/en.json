@@ -348,7 +348,19 @@
         "MONTHLY": "Monthly",
         "YEARLY": "Yearly"
       }
-    }
+    },
+    "reportListing": "Report this listing for violation",
+    "reportTitle": "Report Listing",
+    "reportQuestion": "Why do you want to report this listing?",
+    "reportReasonFraud": "Fraud or fake listing",
+    "reportReasonInappropriate": "Inappropriate or offensive content",
+    "reportReasonWrongCategory": "Listing in wrong category",
+    "reportReasonSold": "Item sold or unavailable",
+    "reportReasonOther": "Other",
+    "reportDetailsPlaceholder": "Please provide additional details (optional)...",
+    "sendReport": "Send Report",
+    "sendingReport": "Sending...",
+    "reportSuccess": "Report sent successfully, thank you"
   },
   "createListing": {
     "pageTitle": "Post New Ad",
@@ -432,7 +444,6 @@
     "saveChanges": "Save Changes",
     "updatingListing": "Updating...",
     "updateSuccess": "Listing updated successfully!",
-
     "aiImageLoading": "🤖 AI is scanning the image...",
     "aiImageSuccess": "✅ Image is perfect and matches the category",
     "aiImageWarning": "⚠️ Image might not match, please verify",

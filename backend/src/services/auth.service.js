@@ -217,6 +217,22 @@ class AuthService {
 
     return { message: 'تم تغيير كلمة المرور بنجاح' };
   }
+
+  async updateProfile(userId, fullName) {
+    if (!fullName || fullName.trim() === '') {
+      const err = new Error('INVALID_FULL_NAME');
+      err.statusCode = 400;
+      throw err;
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { fullName },
+    });
+
+    const { passwordHash: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
+  }
 }
 
 export default new AuthService();

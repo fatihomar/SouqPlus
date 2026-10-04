@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Heart, MapPin, Share2, ShieldCheck, CheckCircle2, Phone, Home as HomeIcon, Zap, Car, Eye, X, Send, DollarSign, MessageCircle } from 'lucide-react';
+import { Heart, MapPin, Share2, ShieldCheck, CheckCircle2, Phone, Home as HomeIcon, Zap, Car, Eye, X, Send, DollarSign, MessageCircle, Flag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/store/auth.store';
 import { useRouter } from 'next/navigation';
@@ -12,6 +12,7 @@ import { messagesService } from '@/services/messages.service';
 import { favoritesService } from '@/services/favorites.service';
 import { toast } from 'react-hot-toast';
 import ListingImageCarousel from './ListingImageCarousel';
+import { reportListing } from '@/services/listing.service';
 
 interface ListingDetailsProps {
   listing: any;
@@ -28,6 +29,9 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
   const [showMessageModal, setShowMessageModal] = useState(false);
   const [offerAmount, setOfferAmount] = useState('');
   const [messageText, setMessageText] = useState('');
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportReason, setReportReason] = useState(t('reportReasonFraud'));
+  const [reportDetails, setReportDetails] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user, isAuthenticated } = useAuthStore();
   
@@ -88,6 +92,22 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
       setIsSubmitting(false);
     }
   };
+
+  const handleReportSubmit = async () => {
+    try {
+      setIsSubmitting(true);
+      const fullReason = reportDetails ? `${reportReason} - ${reportDetails}` : reportReason;
+      await reportListing(listing.id, fullReason);
+      toast.success(t('reportSuccess'));
+      setShowReportModal(false);
+      setReportDetails('');
+    } catch (error: any) {
+      toast.error(error.response?.data?.error?.message || error.response?.data?.message || t('genericError'));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleShare = async () => {
     const url = window.location.href;
     if (navigator.share) {
@@ -288,6 +308,22 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
             </section>
           )}
 
+          {/* Report Button at Bottom */}
+          {!isOwner && (
+            <div className="pt-8 mt-8 border-t border-slate-100 flex justify-center lg:justify-start">
+              <button 
+                onClick={() => {
+                  if (!isAuthenticated) router.push('/login');
+                  else setShowReportModal(true);
+                }}
+                className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-rose-600 transition-colors bg-slate-100 hover:bg-rose-50 px-5 py-2.5 rounded-xl"
+              >
+                <Flag className="w-4 h-4" />
+                {t('reportListing')}
+              </button>
+            </div>
+          )}
+
         </div>
 
         {/* Sidebar */}
@@ -475,6 +511,56 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
               >
                 <Send className="w-4 h-4" />
                 {isSubmitting ? t('sendOfferLoading') : t('send')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Report Modal */}
+      {showReportModal && (
+        <div className="fixed inset-0 z-[90] bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-black text-slate-900">{t('reportTitle')}</h3>
+              <button onClick={() => setShowReportModal(false)} className="text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 p-2 rounded-full transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-slate-500 mb-6">{t('reportQuestion')}</p>
+            
+            <div className="space-y-4 mb-8">
+              <select 
+                value={reportReason}
+                onChange={(e) => setReportReason(e.target.value)}
+                className="w-full h-14 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-bold focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              >
+                <option value={t('reportReasonFraud')}>{t('reportReasonFraud')}</option>
+                <option value={t('reportReasonInappropriate')}>{t('reportReasonInappropriate')}</option>
+                <option value={t('reportReasonWrongCategory')}>{t('reportReasonWrongCategory')}</option>
+                <option value={t('reportReasonSold')}>{t('reportReasonSold')}</option>
+                <option value={t('reportReasonOther')}>{t('reportReasonOther')}</option>
+              </select>
+
+              <textarea 
+                placeholder={t('reportDetailsPlaceholder')}
+                value={reportDetails}
+                onChange={(e) => setReportDetails(e.target.value)}
+                className="w-full h-24 bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 resize-none"
+              />
+            </div>
+            
+            <div className="flex gap-3">
+              <Button onClick={() => setShowReportModal(false)} variant="outline" className="flex-1 h-12 rounded-xl text-slate-600 font-bold border-slate-200">
+                {t('cancel')}
+              </Button>
+              <Button 
+                onClick={handleReportSubmit}
+                disabled={isSubmitting}
+                className="flex-1 h-12 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold flex gap-2 items-center justify-center shadow-md shadow-rose-600/20"
+              >
+                <Flag className="w-4 h-4" />
+                {isSubmitting ? t('sendingReport') : t('sendReport')}
               </Button>
             </div>
           </div>

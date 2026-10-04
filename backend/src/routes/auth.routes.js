@@ -29,5 +29,6 @@ router.post('/reset-password', validate(resetPasswordSchema), authController.res
 
 // مسار جلب بيانات المستخدم الحالي (محمي بواسطة حارس الأمان Auth Guard)
 router.get('/me', authGuard, authController.getMe);
+router.put('/me', authGuard, authController.updateProfile);
 
 export default router;

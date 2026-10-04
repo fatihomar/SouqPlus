@@ -30,4 +30,9 @@ export const authService = {
     const response = await axiosInstance.post('/auth/reset-password', data);
     return response.data;
   },
+
+  updateProfile: async (data: { fullName: string }) => {
+    const response = await axiosInstance.put('/auth/me', data);
+    return response.data;
+  },
 };

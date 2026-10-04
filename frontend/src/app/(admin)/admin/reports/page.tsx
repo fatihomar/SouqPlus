@@ -72,7 +72,7 @@ export default function AdminReportsPage() {
       {/* Filters Section */}
       <div className="flex flex-col gap-4">
         {/* Horizontal Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar">
+        <div className="flex flex-wrap items-center gap-2">
           {['', 'PENDING', 'REVIEWING', 'RESOLVED', 'REJECTED'].map((s) => (
             <button
               key={s}
@@ -83,7 +83,7 @@ export default function AdminReportsPage() {
                   : 'bg-white border border-slate-100 text-slate-600 hover:bg-slate-50'
               }`}
             >
-              {s === '' ? t('allStatuses') : s === 'PENDING' ? t('pending') : s === 'REVIEWING' ? 'Reviewing' : s === 'RESOLVED' ? 'Resolved' : t('rejected')}
+              {s === '' ? t('allStatuses') : s === 'PENDING' ? t('pending') : s === 'REVIEWING' ? 'قيد المراجعة' : s === 'RESOLVED' ? 'تم الحل' : t('rejected')}
             </button>
           ))}
         </div>

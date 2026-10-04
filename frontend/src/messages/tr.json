@@ -348,7 +348,19 @@
         "MONTHLY": "Aylık",
         "YEARLY": "Yıllık"
       }
-    }
+    },
+    "reportListing": "İhlal nedeniyle bu ilanı şikayet et",
+    "reportTitle": "İlanı Şikayet Et",
+    "reportQuestion": "Bu ilanı neden şikayet etmek istiyorsunuz?",
+    "reportReasonFraud": "Dolandırıcılık veya sahte ilan",
+    "reportReasonInappropriate": "Uygunsuz veya rahatsız edici içerik",
+    "reportReasonWrongCategory": "Yanlış kategoride ilan",
+    "reportReasonSold": "Ürün satıldı veya mevcut değil",
+    "reportReasonOther": "Diğer",
+    "reportDetailsPlaceholder": "Lütfen ek ayrıntılar sağlayın (isteğe bağlı)...",
+    "sendReport": "Şikayeti Gönder",
+    "sendingReport": "Gönderiliyor...",
+    "reportSuccess": "Şikayet başarıyla gönderildi, teşekkürler"
   },
   "createListing": {
     "pageTitle": "Yeni İlan Ver",
