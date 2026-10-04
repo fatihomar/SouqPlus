@@ -120,7 +120,7 @@ export default function AdminListingsPage() {
         <>
           {/* Mobile Cards View */}
           <div className="flex flex-col gap-4 lg:hidden">
-            {listings.map((listing) => (
+            {listings.map((listing: any) => (
               <div key={listing.id} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex flex-col gap-3">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center shrink-0 border border-slate-100">
@@ -174,7 +174,7 @@ export default function AdminListingsPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50 text-slate-600 font-medium">
-                  {listings.map((listing) => (
+                  {listings.map((listing: any) => (
                     <tr key={listing.id} className="hover:bg-slate-50/50 transition-colors">
                       <td className="py-4 px-6">
                         <div className="flex items-center gap-3">
