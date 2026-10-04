@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 export default function SettingsPage() {
   const t = useTranslations("sidebar");
   const locale = useLocale();
-  const { user, setUser } = useAuthStore();
+  const { user, setCredentials } = useAuthStore();
   const [fullName, setFullName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -29,7 +29,7 @@ export default function SettingsPage() {
       setIsSaving(true);
       const res = await authService.updateProfile({ fullName });
       if (res.success) {
-        setUser(res.data);
+        setCredentials(res.data);
         toast.success(locale === 'ar' ? 'تم تحديث الاسم بنجاح' : locale === 'tr' ? 'Ad başarıyla güncellendi' : 'Name updated successfully');
       }
     } catch (error: any) {

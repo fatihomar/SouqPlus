@@ -108,7 +108,7 @@ export default function AdminUsersPage() {
         <>
           {/* Mobile Cards View */}
           <div className="flex flex-col gap-4 lg:hidden">
-            {users.map((user) => (
+            {users.map((user: any) => (
               <div key={user.id} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 flex gap-4 items-start">
                 <div className="w-12 h-12 rounded-full bg-primary-50 overflow-hidden flex items-center justify-center shrink-0 border border-primary/10">
                   {user.avatar ? <img src={user.avatar} alt={user.fullName} onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextElementSibling?.classList.remove('hidden'); }} className="w-full h-full object-cover"/> : null}
@@ -164,7 +164,7 @@ export default function AdminUsersPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50 text-slate-600 font-medium">
-                  {users.map((user) => (
+                  {users.map((user: any) => (
                     <tr key={user.id} className="hover:bg-slate-50/50 transition-colors">
                       <td className="py-4 px-6 font-bold text-slate-900">{user.fullName}</td>
                       <td className="py-4 px-6">{user.email}</td>
