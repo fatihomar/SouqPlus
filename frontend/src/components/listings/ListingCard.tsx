@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { MapPin, Bed, Bath, Maximize, Car, Calendar, Fuel } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import ListingImageCarousel from './ListingImageCarousel';
 import { useTranslations } from 'next-intl';
 
@@ -56,26 +56,6 @@ export default function ListingCard({ listing, onFavoriteToggle }: ListingCardPr
           <span className="truncate">{listing.district && `${listing.district}, `}{listing.city}</span>
         </div>
         
-        {/* Specs Divider */}
-        <div className="mt-auto pt-3 sm:pt-4 border-t border-slate-100 flex items-center justify-between text-[10px] sm:text-xs text-slate-600 font-medium">
-          {listing.category === 'REAL_ESTATE' ? (
-            <>
-              <div className="flex items-center gap-1.5"><Bed className="w-4 h-4 text-slate-400" /> <span>{listing.propertyDetails?.bedrooms || 0}</span></div>
-              <div className="w-px h-4 bg-slate-200"></div>
-              <div className="flex items-center gap-1.5"><Bath className="w-4 h-4 text-slate-400" /> <span>{listing.propertyDetails?.bathrooms || 0}</span></div>
-              <div className="w-px h-4 bg-slate-200"></div>
-              <div className="flex items-center gap-1.5" dir="ltr"><Maximize className="w-4 h-4 text-slate-400" /> <span>{listing.propertyDetails?.area || 0}m²</span></div>
-            </>
-          ) : (
-            <>
-              <div className="flex items-center gap-1.5" dir="ltr"><Car className="w-4 h-4 text-slate-400" /> <span>{listing.carDetails?.mileage?.toLocaleString() || 0}km</span></div>
-              <div className="w-px h-4 bg-slate-200"></div>
-              <div className="flex items-center gap-1.5"><Calendar className="w-4 h-4 text-slate-400" /> <span>{listing.carDetails?.year || '-'}</span></div>
-              <div className="w-px h-4 bg-slate-200"></div>
-              <div className="flex items-center gap-1"><Fuel className="w-3.5 h-3.5 text-slate-400" /> <span className="truncate max-w-[40px] sm:max-w-[60px]">{listing.carDetails?.fuelType || t("petrol")}</span></div>
-            </>
-          )}
-        </div>
       </div>
     </Link>
   );
