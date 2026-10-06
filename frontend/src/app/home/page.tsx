@@ -208,36 +208,38 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-[28px] font-black text-slate-900">{t("featuredListings")}</h2>
             
             <div className="flex items-center gap-2 sm:gap-3">
-              <div className="flex items-center gap-1 sm:gap-2">
-                <button 
-                  onClick={() => {
-                    if (scrollContainerRef.current) {
-                      const isRtl = document.documentElement.dir === 'rtl';
-                      scrollContainerRef.current.scrollBy({ left: isRtl ? 320 : -320, behavior: 'smooth' });
-                    }
-                  }} 
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
-                >
-                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
-                </button>
-                <button 
-                  onClick={() => {
-                    if (scrollContainerRef.current) {
-                      const isRtl = document.documentElement.dir === 'rtl';
-                      scrollContainerRef.current.scrollBy({ left: isRtl ? -320 : 320, behavior: 'smooth' });
-                    }
-                  }} 
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary transition-colors shadow-sm"
-                >
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
-                </button>
-              </div>
-
               <Link href="/explore" className="text-primary font-bold hover:text-primary-dark transition-colors flex items-center text-xs sm:text-base bg-primary/5 hover:bg-primary/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full ms-1 sm:ms-2">
                 {t("viewAll")} <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ms-1 sm:ms-1.5 rtl:rotate-180" strokeWidth={2.5} />
               </Link>
             </div>
           </div>
+          
+          <div className="relative group">
+            {/* Left Navigation Arrow */}
+            <button 
+              onClick={() => {
+                if (scrollContainerRef.current) {
+                  const isRtl = document.documentElement.dir === 'rtl';
+                  scrollContainerRef.current.scrollBy({ left: isRtl ? 320 : -320, behavior: 'smooth' });
+                }
+              }} 
+              className="absolute -start-4 md:-start-6 top-1/3 md:top-[40%] -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary hover:scale-105 transition-all shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)]"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 rtl:rotate-180" />
+            </button>
+
+            {/* Right Navigation Arrow */}
+            <button 
+              onClick={() => {
+                if (scrollContainerRef.current) {
+                  const isRtl = document.documentElement.dir === 'rtl';
+                  scrollContainerRef.current.scrollBy({ left: isRtl ? -320 : 320, behavior: 'smooth' });
+                }
+              }} 
+              className="absolute -end-4 md:-end-6 top-1/3 md:top-[40%] -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:text-primary hover:scale-105 transition-all shadow-[0_4px_20px_-10px_rgba(0,0,0,0.1)]"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 rtl:rotate-180" />
+            </button>
           
           <div 
             ref={scrollContainerRef}
@@ -278,6 +280,7 @@ export default function HomePage() {
               </>
             )}
             </div>
+          </div>
           </div>
         )}
 
