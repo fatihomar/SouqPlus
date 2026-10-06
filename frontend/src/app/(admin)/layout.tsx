@@ -13,6 +13,7 @@ const AdminSidebar = ({ onClose, isMobile }: { onClose?: () => void, isMobile?: 
   const { logout } = useAuthStore();
   const router = useRouter();
   const t = useTranslations('admin');
+  const tSidebar = useTranslations('sidebar');
 
   const handleLogout = () => {
     logout();
@@ -116,7 +117,7 @@ const AdminSidebar = ({ onClose, isMobile }: { onClose?: () => void, isMobile?: 
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-primary bg-primary-50 hover:bg-primary-100 font-bold transition-colors w-full"
         >
           <Home className="w-5 h-5" />
-          <span className="text-sm">الرئيسية</span>
+          <span className="text-sm">{tSidebar('home')}</span>
         </Link>
 
         <button
@@ -190,21 +191,25 @@ const AdminTopbar = ({ onMenuClick, isDesktopSidebarOpen }: { onMenuClick: () =>
         </div>
 
         {/* Desktop Search */}
-        <div className="hidden md:flex relative w-96">
-          <Search className="w-4 h-4 absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input 
-            type="text" 
-            placeholder={t('searchPlaceholder')} 
-            className="w-full h-11 bg-slate-50 border-none rounded-full ps-11 pe-4 text-sm focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none"
-          />
-        </div>
+        {process.env.NODE_ENV !== 'development' && (
+          <div className="hidden md:flex relative w-96">
+            <Search className="w-4 h-4 absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder={t('searchPlaceholder')} 
+              className="w-full h-11 bg-slate-50 border-none rounded-full ps-11 pe-4 text-sm focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none"
+            />
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-4 md:gap-6">
         {/* Mobile Search Icon */}
-        <button className="md:hidden relative text-slate-600 hover:text-primary transition-colors p-2">
-          <Search className="w-5 h-5" />
-        </button>
+        {process.env.NODE_ENV !== 'development' && (
+          <button className="md:hidden relative text-slate-600 hover:text-primary transition-colors p-2">
+            <Search className="w-5 h-5" />
+          </button>
+        )}
 
         <div className="flex items-center gap-3 md:ps-6 md:border-s border-slate-100">
           <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary-light flex items-center justify-center text-primary-dark font-bold text-sm md:text-lg shrink-0 border border-primary/20">
