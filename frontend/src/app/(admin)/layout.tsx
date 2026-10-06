@@ -26,11 +26,11 @@ const AdminSidebar = ({ onClose, isMobile }: { onClose?: () => void, isMobile?: 
     { name: t('users'), href: '/admin/users', icon: Users },
     { name: t('listings'), href: '/admin/listings', icon: Grid },
     { name: t('reports'), href: '/admin/reports', icon: FileText },
+    { name: t('logs'), href: '/admin/logs', icon: FileText },
   ];
 
   const systemMenuItems = [
     { name: t('settings'), href: '/admin/settings', icon: Settings },
-    { name: t('logs'), href: '/admin/logs', icon: FileText },
   ];
 
   return (
