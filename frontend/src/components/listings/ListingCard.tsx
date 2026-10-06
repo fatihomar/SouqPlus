@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { Heart, MapPin, Bed, Bath, Maximize, Car, Calendar, Fuel } from 'lucide-react';
+import { MapPin, Bed, Bath, Maximize, Car, Calendar, Fuel } from 'lucide-react';
 import ListingImageCarousel from './ListingImageCarousel';
 import { useTranslations } from 'next-intl';
-import { favoritesService } from '@/services/favorites.service';
-import { useAuthStore } from '@/store/auth.store';
-import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 
 interface ListingCardProps {
   listing: any;
@@ -15,48 +11,6 @@ interface ListingCardProps {
 
 export default function ListingCard({ listing, onFavoriteToggle }: ListingCardProps) {
   const t = useTranslations("home");
-  const { isAuthenticated } = useAuthStore();
-  const router = useRouter();
-  const [isFavorite, setIsFavorite] = useState(!!listing.favoriteId);
-  const [isLiking, setIsLiking] = useState(false);
-
-  const toggleFavorite = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (!isAuthenticated) {
-      toast.error(t("loginRequired"));
-      router.push('/login');
-      return;
-    }
-    
-    if (isLiking) return;
-    setIsLiking(true);
-    
-    try {
-      await favoritesService.toggleFavorite(listing.id);
-      setIsFavorite(!isFavorite);
-      if (!isFavorite) {
-         toast.success(t("addedToFavorites"));
-      } else {
-         toast.success(t("removedFromFavorites"));
-      }
-      if (onFavoriteToggle) {
-        onFavoriteToggle(listing.id);
-      }
-    } catch (err: any) {
-      const serverMsg = err.response?.data?.error?.message || err.response?.data?.error;
-      if (serverMsg === 'لا يمكنك إضافة إعلانك الخاص إلى المفضلة' || serverMsg === 'You cannot favorite your own listing') {
-        toast.error(t("cannotFavoriteOwn"));
-      } else if (err.response?.status === 401) {
-        toast.error(t("loginRequired"));
-      } else {
-        toast.error(typeof serverMsg === 'string' ? serverMsg : t("errorGeneric"));
-      }
-    } finally {
-      setIsLiking(false);
-    }
-  };
 
   return (
     <Link href={`/listings/${listing.id}`} className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 relative block group">
@@ -73,15 +27,6 @@ export default function ListingCard({ listing, onFavoriteToggle }: ListingCardPr
             {listing.listingType === 'RENT' ? t("forRent") : t("forSale")}
           </span>
         </div>
-
-        {/* Favorite - Top Right */}
-        <button 
-          onClick={toggleFavorite}
-          disabled={isLiking}
-          className={`absolute top-3 end-3 w-8 h-8 rounded-full flex items-center justify-center z-10 shadow-sm transition-all duration-300 ${isFavorite ? 'bg-red-50 text-red-500' : 'bg-white/90 backdrop-blur-md text-slate-400 hover:text-red-500'}`}
-        >
-          <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''} ${isLiking ? 'animate-pulse' : ''}`} />
-        </button>
 
         {/* Image Carousel */}
         <ListingImageCarousel images={listing.images} title={listing.title} useNextImage={true} />
