@@ -7,62 +7,14 @@ import {
   Home as HomeIcon, 
   Car,
   MapPin,
-  Heart,
   ArrowRight,
-  Bed,
-  Bath,
-  Maximize,
-  Gauge,
-  Calendar,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-import { useRouter } from "next/navigation";
-import { favoritesService } from "@/services/favorites.service";
-import { useAuthStore } from "@/store/auth.store";
-import toast from "react-hot-toast";
-
 function FeaturedListingCard({ listing, t }: { listing: any; t: any }) {
-  const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
-  const [isFavorite, setIsFavorite] = useState(!!listing.favoriteId);
-  const [isLiking, setIsLiking] = useState(false);
-
-  const toggleFavorite = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    if (!isAuthenticated) {
-      toast.error(t("loginRequired"));
-      router.push('/login');
-      return;
-    }
-    
-    if (isLiking) return;
-    setIsLiking(true);
-    
-    try {
-      await favoritesService.toggleFavorite(listing.id);
-      setIsFavorite(!isFavorite);
-      if (!isFavorite) {
-         toast.success(t("addedToFavorites"));
-      } else {
-         toast.success(t("removedFromFavorites"));
-      }
-    } catch (err: any) {
-      const serverMsg = err.response?.data?.error?.message || err.response?.data?.message;
-      if (serverMsg === 'لا يمكنك إضافة إعلانك الخاص إلى المفضلة' || serverMsg === 'You cannot favorite your own listing') {
-        toast.error(t("cannotFavoriteOwn"));
-      } else {
-        toast.error(typeof serverMsg === 'string' ? serverMsg : t("errorGeneric"));
-      }
-    } finally {
-      setIsLiking(false);
-    }
-  };
 
   return (
     <Link href={`/listings/${listing.id}`} className="bg-white border border-slate-100 rounded-3xl overflow-hidden shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 group flex flex-col">
@@ -75,14 +27,6 @@ function FeaturedListingCard({ listing, t }: { listing: any; t: any }) {
           {listing.listingType === 'RENT' ? t("forRent") : t("forSale")}
         </div>
 
-        {/* Top Right Heart */}
-        <button 
-          onClick={toggleFavorite}
-          disabled={isLiking}
-          className={`absolute top-4 end-4 w-8 h-8 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 ${isFavorite ? 'bg-red-50 text-red-500' : 'bg-white/95 backdrop-blur-md text-slate-400 hover:text-red-500'}`}
-        >
-          <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''} ${isLiking ? 'animate-pulse' : ''}`} strokeWidth={2} />
-        </button>
       </div>
       
       <div className="p-5 flex flex-col flex-1">
@@ -95,41 +39,6 @@ function FeaturedListingCard({ listing, t }: { listing: any; t: any }) {
           <span className="truncate">{listing.city} {listing.district && `- ${listing.district}`}</span>
         </div>
 
-        {/* Specs Row */}
-        <div className="flex items-center gap-4 text-[13px] font-medium text-slate-500 mb-5">
-          {listing.category === 'REAL_ESTATE' ? (
-            <>
-              {listing.propertyDetails?.bedrooms !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <Bed className="w-4 h-4 text-slate-400" /> {listing.propertyDetails.bedrooms}
-                </div>
-              )}
-              {listing.propertyDetails?.bathrooms !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <Bath className="w-4 h-4 text-slate-400" /> {listing.propertyDetails.bathrooms}
-                </div>
-              )}
-              {listing.propertyDetails?.area !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <Maximize className="w-4 h-4 text-slate-400" /> {listing.propertyDetails.area} m²
-                </div>
-              )}
-            </>
-          ) : (
-            <>
-              {listing.carDetails?.year !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4 text-slate-400" /> {listing.carDetails.year}
-                </div>
-              )}
-              {listing.carDetails?.mileage !== undefined && (
-                <div className="flex items-center gap-1.5">
-                  <Gauge className="w-4 h-4 text-slate-400" /> {listing.carDetails.mileage.toLocaleString()} km
-                </div>
-              )}
-            </>
-          )}
-        </div>
 
         {/* Price Footer */}
         <div className="mt-auto pt-4 border-t border-slate-100/80 flex items-center">
