@@ -167,11 +167,6 @@ const AdminBottomNav = () => {
 };
 
 const AdminTopbar = ({ onMenuClick, isDesktopSidebarOpen }: { onMenuClick: () => void, isDesktopSidebarOpen?: boolean }) => {
-  const { user } = useAuthStore();
-  const t = useTranslations('admin');
-  const locale = useLocale();
-  const isRtl = locale === 'ar';
-  
   return (
     <header className="h-16 md:h-20 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-4 md:px-8 sticky top-0 z-30 transition-all">
       <div className="flex items-center gap-3">
@@ -188,37 +183,6 @@ const AdminTopbar = ({ onMenuClick, isDesktopSidebarOpen }: { onMenuClick: () =>
           <Link href="/admin" className="text-xl font-black text-slate-900 tracking-tight ms-1">
             Souq<span className="text-primary">+</span>
           </Link>
-        </div>
-
-        {/* Desktop Search */}
-        {process.env.NODE_ENV !== 'development' && (
-          <div className="hidden md:flex relative w-96">
-            <Search className="w-4 h-4 absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input 
-              type="text" 
-              placeholder={t('searchPlaceholder')} 
-              className="w-full h-11 bg-slate-50 border-none rounded-full ps-11 pe-4 text-sm focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all outline-none"
-            />
-          </div>
-        )}
-      </div>
-
-      <div className="flex items-center gap-4 md:gap-6">
-        {/* Mobile Search Icon */}
-        {process.env.NODE_ENV !== 'development' && (
-          <button className="md:hidden relative text-slate-600 hover:text-primary transition-colors p-2">
-            <Search className="w-5 h-5" />
-          </button>
-        )}
-
-        <div className="flex items-center gap-3 md:ps-6 md:border-s border-slate-100">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary-light flex items-center justify-center text-primary-dark font-bold text-sm md:text-lg shrink-0 border border-primary/20">
-            {user?.fullName?.charAt(0).toUpperCase() || 'A'}
-          </div>
-          <div className="hidden md:block">
-            <h4 className="text-sm font-bold text-slate-900 leading-tight">{user?.fullName || 'Admin'}</h4>
-            <p className="text-[11px] text-slate-500 font-medium">{t('superAdmin')}</p>
-          </div>
         </div>
       </div>
     </header>
