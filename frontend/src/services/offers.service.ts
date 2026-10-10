@@ -24,5 +24,10 @@ export const offersService = {
   respondToOffer: async (offerId: string, action: 'ACCEPT' | 'REJECT') => {
     const response = await axiosInstance.put(`/offers/${offerId}/respond`, { action });
     return response.data;
+  },
+
+  confirmOffer: async (offerId: string, action: 'CONFIRM' | 'CANCEL') => {
+    const response = await axiosInstance.patch(`/offers/${offerId}/confirm`, { action });
+    return response.data;
   }
 };

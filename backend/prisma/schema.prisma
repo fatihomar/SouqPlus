@@ -236,6 +236,8 @@ enum OfferStatus {
   PENDING
   ACCEPTED
   REJECTED
+  COMPLETED
+  CANCELLED
   EXPIRED
 }
 

@@ -68,6 +68,19 @@ function OffersContent() {
     }
   };
 
+  const handleConfirm = async (offerId: string, action: 'CONFIRM' | 'CANCEL') => {
+    setIsProcessing(offerId);
+    try {
+      await offersService.confirmOffer(offerId, action);
+      toast.success(action === 'CONFIRM' ? 'تم إتمام الصفقة بنجاح' : 'تم إلغاء العرض');
+      loadData();
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || t("generalError"));
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
   const handleAskAI = async (offer: any) => {
     setIsAnalyzing(offer.id);
     try {
@@ -98,9 +111,13 @@ function OffersContent() {
       case 'PENDING':
         return <span className="px-3 py-1 bg-primary-50 text-primary-dark rounded-full text-xs font-bold border border-primary-light">{t("statusPending")}</span>;
       case 'ACCEPTED':
-        return <span className="px-3 py-1 bg-green-50 text-green-600 rounded-full text-xs font-bold border border-green-100">{t("statusAccepted")}</span>;
+        return <span className="px-3 py-1 bg-yellow-50 text-yellow-600 rounded-full text-xs font-bold border border-yellow-100">بانتظار التأكيد</span>;
       case 'REJECTED':
         return <span className="px-3 py-1 bg-red-50 text-red-600 rounded-full text-xs font-bold border border-red-100">{t("statusRejected")}</span>;
+      case 'COMPLETED':
+        return <span className="px-3 py-1 bg-green-50 text-green-600 rounded-full text-xs font-bold border border-green-100">مكتمل</span>;
+      case 'CANCELLED':
+        return <span className="px-3 py-1 bg-slate-100 text-slate-500 rounded-full text-xs font-bold border border-slate-200">ملغي</span>;
       default:
         return null;
     }
@@ -286,7 +303,27 @@ function OffersContent() {
                       <p className="font-black text-slate-900 text-lg">${offer.amount?.toLocaleString()}</p>
                     </div>
                     <div>
-                      {renderOfferStatus(offer)}
+                      {offer.status === 'ACCEPTED' ? (
+                        <div className="flex items-center gap-2">
+                          <button 
+                            disabled={isProcessing === offer.id}
+                            onClick={() => handleConfirm(offer.id, 'CANCEL')}
+                            className="px-4 py-2 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors disabled:opacity-50"
+                          >
+                            إلغاء
+                          </button>
+                          <button 
+                            disabled={isProcessing === offer.id}
+                            onClick={() => handleConfirm(offer.id, 'CONFIRM')}
+                            className="px-4 py-2 text-xs font-bold text-white bg-primary border border-primary rounded-xl hover:bg-primary-dark transition-colors flex items-center gap-1 shadow-sm disabled:opacity-50"
+                          >
+                            {isProcessing === offer.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Check className="w-3 h-3" />}
+                            تأكيد الشراء
+                          </button>
+                        </div>
+                      ) : (
+                        renderOfferStatus(offer)
+                      )}
                     </div>
                   </div>
                 </div>

@@ -12,6 +12,7 @@ router.use(authGuard);
 // مسارات المشتري
 router.post('/', validate(createOfferSchema), offersController.createOffer); // تقديم عرض جديد
 router.get('/my-offers', offersController.getMyOffers); // جلب العروض التي قدمها المشتري نفسه
+router.patch('/:id/confirm', offersController.confirmOffer); // تأكيد أو إلغاء العرض المقبول
 
 // مسارات البائع
 router.get('/received-offers', offersController.getReceivedOffers); // جلب جميع العروض التي تلقاها البائع

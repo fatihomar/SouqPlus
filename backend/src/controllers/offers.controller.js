@@ -96,7 +96,31 @@ class OffersController {
 
     res.status(200).json({
       success: true,
-      message: action.toUpperCase() === 'ACCEPT' ? 'تم قبول العرض بنجاح' : 'تم رفض العرض',
+      message: action.toUpperCase() === 'ACCEPT' ? 'تم قبول العرض بانتظار تأكيد المشتري' : 'تم رفض العرض',
+      data: result
+    });
+  });
+
+  /**
+   * تأكيد العرض أو إلغاؤه من قبل المشتري
+   */
+  confirmOffer = catchAsync(async (req, res) => {
+    const buyerId = req.user.id;
+    const { id: offerId } = req.params;
+    const { action } = req.body; // 'CONFIRM' or 'CANCEL'
+
+    if (!action) {
+      return res.status(400).json({
+        success: false,
+        message: 'الرجاء تحديد الإجراء (CONFIRM أو CANCEL)'
+      });
+    }
+
+    const result = await offersService.confirmOffer(buyerId, offerId, action.toUpperCase());
+
+    res.status(200).json({
+      success: true,
+      message: action.toUpperCase() === 'CONFIRM' ? 'تم إتمام الصفقة بنجاح' : 'تم إلغاء العرض بنجاح',
       data: result
     });
   });
