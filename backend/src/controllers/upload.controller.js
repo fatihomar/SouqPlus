@@ -66,8 +66,9 @@ class UploadController {
           throw err;
         }
 
-        // 4. Sanitize & Convert to WEBP
+        // 4. Sanitize, Resize & Convert to WEBP
         const processedBuffer = await image
+          .resize({ width: 1280, height: 1280, fit: 'inside', withoutEnlargement: true }) // Resize to max 1280px
           .webp({ quality: 80 }) // Converts to WebP (and implicitly drops EXIF because withMetadata() is NOT called)
           .toBuffer();
 
