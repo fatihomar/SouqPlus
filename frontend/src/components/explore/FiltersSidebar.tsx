@@ -239,7 +239,7 @@ export default function FiltersSidebar({ initialFilters, onFilterChange, onClose
             onClick={onClose}
             className="w-full py-3 text-sm font-bold text-white bg-primary hover:bg-primary-dark rounded-xl transition-colors shadow-sm"
           >
-            عرض النتائج
+            {t("showResults")}
           </button>
         )}
         <button 

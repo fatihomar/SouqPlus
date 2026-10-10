@@ -423,7 +423,9 @@
     "aiImageLoading": "🤖 جاري فحص الصورة بالذكاء الاصطناعي...",
     "aiImageSuccess": "✅ صورة ممتازة ومطابقة للقسم",
     "aiImageWarning": "⚠️ الصورة قد لا تكون مطابقة، يرجى التأكد",
-    "aiImageError": "خطأ في فحص الصورة"
+    "aiImageError": "خطأ في فحص الصورة",
+    "resetForm": "إفراغ الحقول",
+    "resetFormConfirm": "هل أنت متأكد من مسح جميع المعلومات؟"
   },
   "filters": {
     "advancedFilters": "الفلاتر المتقدمة",
@@ -463,7 +465,8 @@
     "bathrooms": "الحمامات",
     "numRooms": "عدد الغرف",
     "numBaths": "عدد الحمامات",
-    "clearFilters": "مسح الفلاتر"
+    "clearFilters": "مسح الفلاتر",
+    "showResults": "عرض النتائج"
   },
   "notifications": {
     "title": "الإشعارات",

@@ -6,7 +6,8 @@ import { useAuthStore } from '@/store/auth.store';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import CreateListingForm from '@/components/listings/CreateListingForm';
 import { Button } from '@/components/ui/button';
-import { Save } from 'lucide-react';
+import { Save, RefreshCw } from 'lucide-react';
+import { useCreateListingStore } from '@/store/createListingStore';
 import toast from 'react-hot-toast';
 import { useTranslations } from 'next-intl';
 
@@ -36,8 +37,16 @@ export default function CreateListingPage() {
     );
   }
 
+  const { resetForm } = useCreateListingStore();
+
   const handleSaveDraft = () => {
     toast.success(t('draftSaved'));
+  };
+
+  const handleReset = () => {
+    if (window.confirm(t('resetFormConfirm') || 'Are you sure you want to clear all information?')) {
+      resetForm();
+    }
   };
 
   return (
@@ -50,14 +59,24 @@ export default function CreateListingPage() {
               {t('pageSubtitle')}
             </p>
           </div>
-          <Button 
-            variant="outline" 
-            onClick={handleSaveDraft}
-            className="rounded-xl font-bold border-slate-200 text-slate-700 hover:bg-slate-50 h-11 px-6 shadow-sm bg-white"
-          >
-            <Save className="w-4 h-4 rtl:ml-2 ltr:mr-2" />
-            {t('saveDraft')}
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              onClick={handleReset}
+              className="rounded-xl font-bold border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 h-11 px-6 shadow-sm bg-white"
+            >
+              <RefreshCw className="w-4 h-4 rtl:ml-2 ltr:mr-2" />
+              {t('resetForm')}
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={handleSaveDraft}
+              className="rounded-xl font-bold border-slate-200 text-slate-700 hover:bg-slate-50 h-11 px-6 shadow-sm bg-white"
+            >
+              <Save className="w-4 h-4 rtl:ml-2 ltr:mr-2" />
+              {t('saveDraft')}
+            </Button>
+          </div>
         </div>
         
         {/* Form handles the 2-column layout itself to manage state across both columns */}
